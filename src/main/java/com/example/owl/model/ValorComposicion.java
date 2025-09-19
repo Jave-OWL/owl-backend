@@ -18,6 +18,11 @@ public class ValorComposicion {
 
     public ValorComposicion() {
     }
+
+    public ValorComposicion(String dato, float valor) {
+        this.dato = dato;
+        this.valor = valor;
+    }
     public Long getId() {
         return id;
     }

@@ -23,6 +23,19 @@ public class RentabilidadVolatilidad {
     public RentabilidadVolatilidad() {
     }
 
+    public RentabilidadVolatilidad(String tipoIndicador, String tipoParticipacion, Double ultimoMes, 
+            Double ultimos3Meses, Double ultimos6Meses, Double ultimos12Meses, 
+            Double ultimos2Anios, Double ultimos3Anios) {
+        this.tipoIndicador = tipoIndicador;
+        this.tipoParticipacion = tipoParticipacion;
+        this.ultimoMes = ultimoMes;
+        this.ultimos3Meses = ultimos3Meses;
+        this.ultimos6Meses = ultimos6Meses;
+        this.ultimos12Meses = ultimos12Meses;
+        this.ultimos2Anios = ultimos2Anios;
+        this.ultimos3Anios = ultimos3Anios;
+    }
+
     public RentabilidadVolatilidad(Long id, String tipoIndicador, String tipoParticipacion, Double ultimoMes, Double ultimos3Meses, Double ultimos6Meses, Double ultimos12Meses, Double ultimos2Anios, Double ultimos3Anios) {
         this.id = id;
         this.tipoIndicador = tipoIndicador;

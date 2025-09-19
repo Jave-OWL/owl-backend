@@ -19,6 +19,11 @@ public class PlazoDuracion {
     public PlazoDuracion() {
     }
 
+    public PlazoDuracion(String inversionesPorPlazo, int participacion) {
+        this.inversionesPorPlazo = inversionesPorPlazo;
+        this.participacion = participacion;
+    }
+
     public Long getId() {
         return id;
     }

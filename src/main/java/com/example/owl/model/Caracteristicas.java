@@ -22,6 +22,13 @@ public class Caracteristicas {
     public Caracteristicas() {
     }
 
+    public Caracteristicas(String calificacion, String tipoDeRenta, String moneda, String activo) {
+        this.calificacion = calificacion;
+        this.tipoDeRenta = tipoDeRenta;
+        this.moneda = moneda;
+        this.activo = activo;
+    }
+
     public Long getId() {
         return id;
     }

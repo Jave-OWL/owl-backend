@@ -1,8 +1,8 @@
 package com.example.owl.model;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
     @Entity
     public class Usuario {
@@ -15,6 +15,13 @@ import jakarta.persistence.GenerationType;
         private String rol;
 
         public Usuario() {
+        }
+
+        public Usuario(String nombre, String correo, String contrasenia, String rol) {
+            this.nombre = nombre;
+            this.correo = correo;
+            this.contrasenia = contrasenia;
+            this.rol = rol;
         }
 
         public Long getId() {

@@ -71,6 +71,18 @@ public class Fic {
     public Fic() {
     }
 
+    public Fic(String nombre, String gestor, String custodio, String politicaInversion, String link, 
+               String riesgo, String rentabilidad, Date fechaCorte) {
+        this.nombre = nombre;
+        this.gestor = gestor;
+        this.custodio = custodio;
+        this.politicaInversion = politicaInversion;
+        this.link = link;
+        this.riesgo = riesgo;
+        this.rentabilidad = rentabilidad;
+        this.fechaCorte = fechaCorte;
+    }
+
     public Long getId() {
         return id;
     }

@@ -33,6 +33,13 @@ public class Composicion {
     public Composicion() {
     }
 
+    public Composicion(String tipoRenta, String paisEmisor, String moneda, String activo) {
+        this.tipoRenta = tipoRenta;
+        this.paisEmisor = paisEmisor;
+        this.moneda = moneda;
+        this.activo = activo;
+    }
+
     public Long getId() {
         return id;
     }

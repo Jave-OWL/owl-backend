@@ -18,6 +18,11 @@ private String participacionDelEmisor;
 public PrincipalesInversiones() {
 }
 
+public PrincipalesInversiones(String emisor, String participacionDelEmisor) {
+    this.emisor = emisor;
+    this.participacionDelEmisor = participacionDelEmisor;
+}
+
 public Long getId() {
     return id;
 

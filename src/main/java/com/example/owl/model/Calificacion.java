@@ -20,6 +20,12 @@ public class Calificacion {
     public Calificacion() {
     }
 
+    public Calificacion(float calificacion, String entidadCalificadora, Date fechaUltimaCalificacion) {
+        this.calificacion = calificacion;
+        this.entidadCalificadora = entidadCalificadora;
+        this.fechaUltimaCalificacion = fechaUltimaCalificacion;
+    }
+
     public Long getId() {
         return id;
     }
