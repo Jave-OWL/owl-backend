@@ -1,7 +1,6 @@
 package com.example.owl.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,23 +24,24 @@ public class FicController {
     private FicService ficService;
 
     @GetMapping("/list")
-    public List<Fic> mostrarFics() {
-        return ficService.searchAll();
+    public List<Fic> obtenerFics() {
+        return ficService.getAllFics();
     }
 
     @GetMapping("/{id}")
-    public Optional<Fic> buscarFicPorId(@PathVariable Long id) {
-        return ficService.searchById(id);
+    public Fic obtenerFicPorId(Long id) {
+        return ficService.getFicById(id).orElse(null);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Fic crearFic(@RequestBody Fic fic) {
-        return ficService.createFic(fic);
+        return ficService.saveFic(fic);
     }
 
     @DeleteMapping("/{id}")
     public void eliminarFic(@PathVariable Long id) {
-        ficService.delete(id);
+        ficService.deleteFic(id);
     }
-
+    
+    
 }

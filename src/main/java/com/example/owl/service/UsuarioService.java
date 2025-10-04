@@ -8,34 +8,26 @@ import org.springframework.stereotype.Service;
 
 import com.example.owl.model.Usuario;
 import com.example.owl.repository.UsuarioRepository;
-
 @Service
 public class UsuarioService {
 
-@Autowired
-private UsuarioRepository usuarioRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
+    public Optional<Usuario> getUsuarioById(Long id) {
+        return usuarioRepository.findById(id);
+    }
 
-public Optional<Usuario> searchById(Long id) {
-    return usuarioRepository.findById(id);
-}
+    public List<Usuario> getAllUsuarios() {
+        return usuarioRepository.findAll();
+    }
 
-public List<Usuario> searchAll(){
-    return usuarioRepository.findAll();
-}
-
-public Usuario createUser(Usuario usuario) {
-    return usuarioRepository.save(usuario);
-}
-
-public void updateUser(Long id, Usuario usuario){
-
-}
-
-public void deleteUser(Long id){
-    if (usuarioRepository.existsById(id)) {
+    public Usuario Usuario(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
+    
+    public void deleteUsuario(Long id) {
         usuarioRepository.deleteById(id);
     }
-}
-
+    
 }

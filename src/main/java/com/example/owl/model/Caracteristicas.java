@@ -4,65 +4,83 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Caracteristicas {
+   @Id
+   @GeneratedValue(strategy = GenerationType.AUTO)
+   private Long id;
+   private String tipo;
+   private float valor;
+   private String fecha_inicio_operaciones;
+   private float no_unidades_en_circulacion;
+   
+   @ManyToOne
+   @JoinColumn(name = "fic_id")
+   private Fic fic;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
-    private String calificacion;
-    private String tipoDeRenta;
-    private String sectorEconomico;
-    private String paisEmisor;
-    private String moneda;
-    private String activo;
+   public Caracteristicas() {
+   }
 
-    public Caracteristicas() {
-    }
+   public Caracteristicas(String tipo, float valor, String fecha_inicio_operaciones,
+         float no_unidades_en_circulacion, Fic fic) {
+      this.tipo = tipo;
+      this.valor = valor;
+      this.fecha_inicio_operaciones = fecha_inicio_operaciones;
+      this.no_unidades_en_circulacion = no_unidades_en_circulacion;
+      this.fic = fic;
+   }
 
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getCalificacion() {
-        return calificacion;
-    }
-    public void setCalificacion(String calificacion) {
-        this.calificacion = calificacion;
-    }
-    public String getTipoDeRenta() {
-        return tipoDeRenta;
-    }
-    public void setTipoDeRenta(String tipoDeRenta) {
-        this.tipoDeRenta = tipoDeRenta;
-    }
-    public String getSectorEconomico() {
-        return sectorEconomico;
-    }
-    public void setSectorEconomico(String sectorEconomico) {
-        this.sectorEconomico = sectorEconomico;
-    }
-    public String getPaisEmisor() {
-        return paisEmisor;
-    }
-    public void setPaisEmisor(String paisEmisor) {
-        this.paisEmisor = paisEmisor;
-    }
-    public String getMoneda() {
-        return moneda;
-    }
-    public void setMoneda(String moneda) {
-        this.moneda = moneda;
-    }
-    public String getActivo() {
-        return activo;
-    }
-    public void setActivo(String activo) {
-        this.activo = activo;
-    }
+   public Long getId() {
+    return id;
+   }
 
+   public void setId(Long id) {
+    this.id = id;
+   }
+
+   public String getTipo() {
+    return tipo;
+   }
+
+   public void setTipo(String tipo) {
+    this.tipo = tipo;
+   }
+
+   public float getValor() {
+    return valor;
+   }
+
+   public void setValor(float valor) {
+    this.valor = valor;
+   }
+
+   public String getFecha_inicio_operaciones() {
+    return fecha_inicio_operaciones;
+   }
+
+   public void setFecha_inicio_operaciones(String fecha_inicio_operaciones) {
+    this.fecha_inicio_operaciones = fecha_inicio_operaciones;
+   }
+
+   public float getNo_unidades_en_circulacion() {
+    return no_unidades_en_circulacion;
+   }
+
+   public void setNo_unidades_en_circulacion(float no_unidades_en_circulacion) {
+    this.no_unidades_en_circulacion = no_unidades_en_circulacion;
+   }
+
+   public Fic getFic() {
+    return fic;
+   }
+
+   public void setFic(Fic fic) {
+    this.fic = fic;
+   }
+
+   
 }

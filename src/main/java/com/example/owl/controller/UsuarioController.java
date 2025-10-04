@@ -1,7 +1,6 @@
 package com.example.owl.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,28 +19,30 @@ import com.example.owl.service.UsuarioService;
 @RequestMapping("/usuario")
 @CrossOrigin(origins = "http://localhost:4200")
 public class UsuarioController {
-
-    @Autowired
+    
+    @Autowired 
     private UsuarioService usuarioService;
 
+
     @GetMapping("/list")
-    public List<Usuario> mostrarUsuarios() {
-        return usuarioService.searchAll();
+    public List<Usuario> obtenerUsuarios() {
+        return usuarioService.getAllUsuarios();
     }
 
     @GetMapping("/{id}")
-    public Optional<Usuario> buscarUsuarioPorId(@PathVariable Long id) {
-        return usuarioService.searchById(id);
+    public Usuario obtenerUsuarioPorId(Long id) {
+        return usuarioService.getUsuarioById(id).orElse(null);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Usuario crearUsuario(@RequestBody Usuario usuario) {
-        return usuarioService.createUser(usuario);
+        return usuarioService.Usuario(usuario);
     }
 
     @DeleteMapping("/{id}")
     public void eliminarUsuario(@PathVariable Long id) {
-        usuarioService.deleteUser(id);
+        usuarioService.deleteUsuario(id);
     }
 
+    
 }
