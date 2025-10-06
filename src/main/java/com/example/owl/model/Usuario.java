@@ -5,6 +5,7 @@ import com.example.owl.model.Fic;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,27 +14,36 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "usuario")
 public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "nombre")
     private String nombre;
+
+    @Column(name = "correo")
     private String correo;
+
+    @Column(name = "contrasena")
     private String contrasena;
+
+    @Column(name = "es_admin")
     private Boolean es_admin;
     private String nivel_riesgo;
 
-    @ManyToMany
-    @JoinTable(
-        name = "usuario_fic_recomendada", // tabla intermedia
-        joinColumns = @JoinColumn(name = "usuario_id"),
-        inverseJoinColumns = @JoinColumn(name = "fic_id")
-    )
-        private List<Fic> fics_recomendados;
+    // @ManyToMany
+    // @JoinTable(
+    //     name = "usuario_fic_recomendada", // tabla intermedia
+    //     joinColumns = @JoinColumn(name = "usuario_id"),
+    //     inverseJoinColumns = @JoinColumn(name = "fic_id")
+    // )
+    //     private List<Fic> fics_recomendados;
 
     public Long getId() {
         return id;
@@ -83,13 +93,13 @@ public class Usuario {
         this.nivel_riesgo = nivel_riesgo;
     }
 
-    public List<Fic> getFics_recomendados() {
-        return fics_recomendados;
-    }
+    // public List<Fic> getFics_recomendados() {
+    //     return fics_recomendados;
+    // }
 
-    public void setFics_recomendados(List<Fic> fics_recomendados) {
-        this.fics_recomendados = fics_recomendados;
-    }
+    // public void setFics_recomendados(List<Fic> fics_recomendados) {
+    //     this.fics_recomendados = fics_recomendados;
+    // }
 
         
 

@@ -3,6 +3,7 @@ package com.example.owl.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,16 +24,17 @@ public class FicController {
     @Autowired
     private FicService ficService;
 
-    @GetMapping("/list")
+   @GetMapping("/list")
     public List<Fic> obtenerFics() {
         return ficService.getAllFics();
     }
 
     @GetMapping("/{id}")
-    public Fic obtenerFicPorId(Long id) {
-        return ficService.getFicById(id).orElse(null);
+    public ResponseEntity<Fic> obtenerFicPorId(@PathVariable("id") long id) {
+        return ficService.getFicById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
-
     @PostMapping("/create")
     public Fic crearFic(@RequestBody Fic fic) {
         return ficService.saveFic(fic);

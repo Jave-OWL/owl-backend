@@ -1,28 +1,50 @@
 package com.example.owl.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "volatilidad_historica")
 public class Volatilidad_Historica {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
+    @Column(name = "tipo_participacion")
     private String tipo_de_participacion;
-    private float ultimo_mes;
-    private float ultimo_6_meses;
-    private float anio_corrido;
-    private float ultimo_anio;
-    private float ultimo_2_anios;
-    private float ultimo_3_anios;
 
-    @ManyToOne
+  // Usar wrappers
+@Column(name = "ultimo_mes")
+private Float ultimo_mes;
+
+@Column(name = "ultimos_2_anios")
+private Float ultimo_2_anios;
+
+@Column(name = "ultimos_3_anios")
+private Float ultimo_3_anios;
+
+@Column(name = "ultimo_anio")
+private Float ultimo_anio;
+
+@Column(name = "ultimos_6_meses")
+private Float ultimo_6_meses;
+
+@Column(name = "anio_corrido")
+private Float anio_corrido;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fic_id")
+    @JsonBackReference
     private Fic fic;
 
     public Volatilidad_Historica() {
@@ -81,7 +103,7 @@ public class Volatilidad_Historica {
         this.anio_corrido = anio_corrido;
     }
 
-    public float getUltimo_anio() {
+    public Float getUltimo_anio() {
         return ultimo_anio;
     }
 
@@ -89,7 +111,7 @@ public class Volatilidad_Historica {
         this.ultimo_anio = ultimo_anio;
     }
 
-    public float getUltimo_2_anios() {
+    public Float getUltimo_2_anios() {
         return ultimo_2_anios;
     }
 
@@ -97,7 +119,7 @@ public class Volatilidad_Historica {
         this.ultimo_2_anios = ultimo_2_anios;
     }
 
-    public float getUltimo_3_anios() {
+    public Float getUltimo_3_anios() {
         return ultimo_3_anios;
     }
 
@@ -113,5 +135,4 @@ public class Volatilidad_Historica {
         this.fic = fic;
     }
 
-    
 }

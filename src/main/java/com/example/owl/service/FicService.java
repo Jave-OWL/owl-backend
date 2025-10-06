@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.owl.model.Fic;
 import com.example.owl.repository.FicRepository;
 
+@Service
 public class FicService {
     
     @Autowired 

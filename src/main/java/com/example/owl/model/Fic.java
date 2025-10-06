@@ -2,48 +2,70 @@ package com.example.owl.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
+@Table(name = "fic")
+@Entity
 public class Fic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(name = "nombre_fic")
     private String nombre_fic;
+    @Column(name = "gestor")
     private String gestor;
+    @Column(name = "custodio")
     private String custodio;
+    @Column(name = "fecha_corte")
     private String fecha_corte;
+    @Column(name = "politica_de_inversion")
     private String politica_de_inversion;
-    private String nivel_riesgo;
+    // @Column(name = "nivel_riesgo")
+    // private String nivel_riesgo;
 
-    @ManyToMany(mappedBy = "fics_recomendados")
-    private List<Usuario> usuarios_recomendados;
+    // @ManyToMany(mappedBy = "fics_recomendados")
+    // private List<Usuario> usuarios_recomendados;
 
-    @OneToMany(mappedBy = "fic", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "fic", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Calificacion> calificaciones;
 
-    @OneToMany(mappedBy = "fic", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "fic", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Caracteristicas> caracteristicas;
 
-    @OneToMany(mappedBy = "fic", cascade = CascadeType.ALL)
-    private List<Composicion_Portafolio> composicion_portafolios;
+    @OneToMany(mappedBy = "fic", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+     @JsonManagedReference
+     private List<Composicion_Portafolio> composicion_portafolios;
 
-    @OneToMany(mappedBy = "fic", cascade = CascadeType.ALL)
-    private List<Volatilidad_Historica> volatilidad_historicas;
+    @OneToMany(mappedBy = "fic", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+     @JsonManagedReference
+     private List<Volatilidad_Historica> volatilidad_historicas;
 
-    @OneToMany(mappedBy = "fic", cascade = CascadeType.ALL)
-    private List<Rentabilidad_Historica> rentabilidad_historicas;
+    @OneToMany(mappedBy = "fic", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+     @JsonManagedReference
+     private List<Rentabilidad_Historica> rentabilidad_historicas;
 
-    @OneToMany(mappedBy = "fic", cascade = CascadeType.ALL)
-    private List<Principales_Inversores> principales_inversores;
+    @OneToMany(mappedBy = "fic", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+     @JsonManagedReference
+     private List<Principales_Inversores> principales_inversores;
 
-    @OneToMany(mappedBy = "fic", cascade = CascadeType.ALL)
-    private List<Plazo_Duracion> plazo_duraciones;
+    @OneToMany(mappedBy = "fic", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+     @JsonManagedReference
+     private List<Plazo_Duracion> plazo_duraciones;
 
     public Fic() {
 
@@ -60,8 +82,8 @@ public class Fic {
         this.custodio = custodio;
         this.fecha_corte = fecha_corte;
         this.politica_de_inversion = politica_de_inversion;
-        this.nivel_riesgo = nivel_riesgo;
-        this.usuarios_recomendados = usuarios_recomendados;
+        // this.nivel_riesgo = nivel_riesgo;
+        // this.usuarios_recomendados = usuarios_recomendados;
         this.calificaciones = calificaciones;
         this.caracteristicas = caracteristicas;
         this.composicion_portafolios = composicion_portafolios;
@@ -119,21 +141,21 @@ public class Fic {
         this.politica_de_inversion = politica_de_inversion;
     }
 
-    public String getNivel_riesgo() {
-        return nivel_riesgo;
-    }
+    // public String getNivel_riesgo() {
+    //     return nivel_riesgo;
+    // }
 
-    public void setNivel_riesgo(String nivel_riesgo) {
-        this.nivel_riesgo = nivel_riesgo;
-    }
+    // public void setNivel_riesgo(String nivel_riesgo) {
+    //     this.nivel_riesgo = nivel_riesgo;
+    // }
 
-    public List<Usuario> getUsuariosRecomendados() {
-        return usuarios_recomendados;
-    }
+    // public List<Usuario> getUsuariosRecomendados() {
+    //     return usuarios_recomendados;
+    // }
 
-    public void setUsuariosRecomendados(List<Usuario> usuarios_recomendados) {
-        this.usuarios_recomendados = usuarios_recomendados;
-    }
+    // public void setUsuariosRecomendados(List<Usuario> usuarios_recomendados) {
+    //     this.usuarios_recomendados = usuarios_recomendados;
+    // }
 
     public List<Calificacion> getCalificaciones() {
         return calificaciones;
