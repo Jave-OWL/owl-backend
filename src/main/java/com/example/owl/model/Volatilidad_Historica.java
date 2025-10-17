@@ -20,35 +20,34 @@ public class Volatilidad_Historica {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "tipo_participacion")
-    private String tipo_de_participacion;
-
-  // Usar wrappers
-@Column(name = "ultimo_mes")
-private Float ultimo_mes;
-
-@Column(name = "ultimos_2_anios")
-private Float ultimo_2_anios;
-
-@Column(name = "ultimos_3_anios")
-private Float ultimo_3_anios;
-
-@Column(name = "ultimo_anio")
-private Float ultimo_anio;
-
-@Column(name = "ultimos_6_meses")
-private Float ultimo_6_meses;
-
-@Column(name = "anio_corrido")
-private Float anio_corrido;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fic_id")
     @JsonBackReference
     private Fic fic;
 
-    public Volatilidad_Historica() {
+    @Column(name = "tipo_participacion")
+    private String tipo_de_participacion;
 
+    @Column(name="anio_corrido")
+    private Float anio_corrido;
+
+    @Column(name = "ultimo_mes")
+    private Float ultimo_mes;
+
+    @Column(name = "ultimos_6_meses")
+    private Float ultimo_6_meses;
+
+    @Column(name = "ultimo_anio")
+    private Float ultimo_anio;
+
+    @Column(name = "ultimos_2_anios")
+    private Float ultimo_2_anios;
+
+    @Column(name = "ultimos_3_anios")
+    private Float ultimo_3_anios;
+
+    public Volatilidad_Historica() {
+        
     }
 
     public Volatilidad_Historica(String tipo_de_participacion, float ultimo_mes, float ultimo_6_meses,

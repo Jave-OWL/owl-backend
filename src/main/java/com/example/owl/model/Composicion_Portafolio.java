@@ -20,23 +20,26 @@ public class Composicion_Portafolio {
    @Column(name = "id")
    private Long id;
 
-   @Column(name = "tipo_composicion")
-   private String tipo_composicion;
-   @Column(name = "categoria")
-   private String categoria;
-   @Column(name = "participacion")
-   private float participacion;
-
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "fic_id")
    @JsonBackReference
    private Fic fic;
+
+   @Column(name = "tipo_composicion")
+   private String tipo_composicion;
+
+   @Column(name = "categoria")
+   private String categoria;
+
+   @Column(name = "participacion")
+   private Float participacion;
+
    
    public Composicion_Portafolio() {
 
    }
 
-   public Composicion_Portafolio(String tipo_composicion, String categoria, float participacion, Fic fic) {
+   public Composicion_Portafolio(String tipo_composicion, String categoria, Float participacion, Fic fic) {
         this.tipo_composicion = tipo_composicion;
         this.categoria = categoria;
         this.participacion = participacion;
@@ -67,11 +70,11 @@ public class Composicion_Portafolio {
     this.categoria = categoria;
    }
 
-   public float getParticipacion() {
+   public Float getParticipacion() {
     return participacion;
    }
 
-   public void setParticipacion(float participacion) {
+   public void setParticipacion(Float participacion) {
     this.participacion = participacion;
    }
 

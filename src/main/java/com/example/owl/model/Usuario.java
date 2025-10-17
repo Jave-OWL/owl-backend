@@ -30,20 +30,28 @@ public class Usuario {
     @Column(name = "correo")
     private String correo;
 
-    @Column(name = "contrasena")
-    private String contrasena;
+    @Column(name = "contrasenia")
+    private String contrasenia;
 
-    @Column(name = "es_admin")
-    private Boolean es_admin;
+    @Column(name = "is_admin")
+    private Boolean is_admin;
+
+    @Column(name = "nivel_riesgo")
     private String nivel_riesgo;
 
-    // @ManyToMany
-    // @JoinTable(
-    //     name = "usuario_fic_recomendada", // tabla intermedia
-    //     joinColumns = @JoinColumn(name = "usuario_id"),
-    //     inverseJoinColumns = @JoinColumn(name = "fic_id")
-    // )
-    //     private List<Fic> fics_recomendados;
+    @OneToMany(mappedBy = "usuario")
+    private List<Fic_Recomendado> fics_recomendados;
+
+    public Usuario() {
+    }
+
+    public Usuario(String nombre, String correo, String contrasenia, Boolean is_admin, String nivel_riesgo) {
+        this.nombre = nombre;
+        this.correo = correo;
+        this.contrasenia = contrasenia;
+        this.is_admin = is_admin;
+        this.nivel_riesgo = nivel_riesgo;
+    }
 
     public Long getId() {
         return id;
@@ -69,20 +77,20 @@ public class Usuario {
         this.correo = correo;
     }
 
-    public String getContrasena() {
-        return contrasena;
+    public String getContrasenia() {
+        return contrasenia;
     }
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 
-    public Boolean getEs_admin() {
-        return es_admin;
+    public Boolean getIs_admin() {
+        return is_admin;
     }
 
-    public void setEs_admin(Boolean es_admin) {
-        this.es_admin = es_admin;
+    public void setIs_admin(Boolean is_admin) {
+        this.is_admin = is_admin;
     }
 
     public String getNivel_riesgo() {
@@ -92,6 +100,10 @@ public class Usuario {
     public void setNivel_riesgo(String nivel_riesgo) {
         this.nivel_riesgo = nivel_riesgo;
     }
+
+
+    
+    
 
     // public List<Fic> getFics_recomendados() {
     //     return fics_recomendados;

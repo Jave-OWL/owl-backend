@@ -27,14 +27,19 @@ public class Rentabilidad_Historica {
 
     @Column(name = "ultimo_mes")
     private Float ultimo_mes;   
+
     @Column(name = "ultimos_6_meses")
-    private Float ultimo_6_meses;
+    private Float ultimos_6_meses;
+
     @Column(name = "anio_corrido")
     private Float anio_corrido;
+
     @Column(name = "ultimo_anio")
     private Float ultimo_anio;
+
     @Column(name = "ultimos_2_anios")
-    private Float ultimo_2_anios;
+    private Float ultimos_2_anios;
+
     @Column(name = "ultimos_3_anios")
     private Float ultimo_3_anios;
 
@@ -51,10 +56,10 @@ public class Rentabilidad_Historica {
             Float anio_corrido, Float ultimo_anio, Float ultimo_2_anios, Float ultimo_3_anios, Fic fic) {
         this.tipo_de_participacion = tipo_de_participacion;
         this.ultimo_mes = ultimo_mes;
-        this.ultimo_6_meses = ultimo_6_meses;
+        this.ultimos_6_meses = ultimo_6_meses;
         this.anio_corrido = anio_corrido;
         this.ultimo_anio = ultimo_anio;
-        this.ultimo_2_anios = ultimo_2_anios;
+        this.ultimos_2_anios = ultimo_2_anios;
         this.ultimo_3_anios = ultimo_3_anios;
         this.fic = fic;
     }
@@ -84,11 +89,11 @@ public class Rentabilidad_Historica {
     }
 
     public Float getUltimo_6_meses() {
-        return ultimo_6_meses;
+        return ultimos_6_meses;
     }
 
     public void setUltimo_6_meses(Float ultimo_6_meses) {
-        this.ultimo_6_meses = ultimo_6_meses;
+        this.ultimos_6_meses = ultimo_6_meses;
     }
 
     public Float getAnio_corrido() {
@@ -108,11 +113,11 @@ public class Rentabilidad_Historica {
     }
 
     public Float getUltimo_2_anios() {
-        return ultimo_2_anios;
+        return ultimos_2_anios;
     }
 
     public void setUltimo_2_anios(Float ultimo_2_anios) {
-        this.ultimo_2_anios = ultimo_2_anios;
+        this.ultimos_2_anios = ultimo_2_anios;
     }
 
     public Float getUltimo_3_anios() {

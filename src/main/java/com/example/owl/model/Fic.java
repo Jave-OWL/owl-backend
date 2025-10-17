@@ -25,19 +25,27 @@ public class Fic {
 
     @Column(name = "nombre_fic")
     private String nombre_fic;
+
     @Column(name = "gestor")
     private String gestor;
+
     @Column(name = "custodio")
     private String custodio;
+
     @Column(name = "fecha_corte")
     private String fecha_corte;
+
     @Column(name = "politica_de_inversion")
     private String politica_de_inversion;
-    // @Column(name = "nivel_riesgo")
-    // private String nivel_riesgo;
 
-    // @ManyToMany(mappedBy = "fics_recomendados")
-    // private List<Usuario> usuarios_recomendados;
+    @Column(name = "tipo")
+    private String tipo;
+
+    //@Column(name = "url")
+    //private String url;
+
+    @OneToMany(mappedBy = "fic")
+    private List<Fic_Recomendado> usuarios_recomendados;
 
     @OneToMany(mappedBy = "fic", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
@@ -61,7 +69,7 @@ public class Fic {
 
     @OneToMany(mappedBy = "fic", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
      @JsonManagedReference
-     private List<Principales_Inversores> principales_inversores;
+     private List<Principales_Inversiones> principales_inversiones;
 
     @OneToMany(mappedBy = "fic", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
      @JsonManagedReference
@@ -74,8 +82,8 @@ public class Fic {
     public Fic(Long id, String nombre_fic, String gestor, String custodio, String fecha_corte, String politica_de_inversion, String nivel_riesgo,
                List<Usuario> usuarios_recomendados, List<Calificacion> calificaciones, List<Caracteristicas> caracteristicas,
                List<Composicion_Portafolio> composicion_portafolios, List<Volatilidad_Historica> volatilidad_historicas,
-               List<Rentabilidad_Historica> rentabilidad_historicas, List<Principales_Inversores> principales_inversores,
-               List<Plazo_Duracion> plazo_duraciones) {
+               List<Rentabilidad_Historica> rentabilidad_historicas, List<Principales_Inversiones> principales_inversiones,
+               List<Plazo_Duracion> plazo_duraciones, String tipo, String url) {
         this.id = id;
         this.nombre_fic = nombre_fic;
         this.gestor = gestor;
@@ -89,8 +97,10 @@ public class Fic {
         this.composicion_portafolios = composicion_portafolios;
         this.volatilidad_historicas = volatilidad_historicas;
         this.rentabilidad_historicas = rentabilidad_historicas;
-        this.principales_inversores = principales_inversores;
+        this.principales_inversiones = principales_inversiones;
         this.plazo_duraciones = plazo_duraciones;
+        this.tipo = tipo;
+       // this.url = url;
     }
 
     public Long getId() {
@@ -197,12 +207,12 @@ public class Fic {
         this.rentabilidad_historicas = rentabilidad_historicas;
     }
 
-    public List<Principales_Inversores> getPrincipales_inversores() {
-        return principales_inversores;
+    public List<Principales_Inversiones> getPrincipales_inversiones() {
+        return principales_inversiones;
     }
 
-    public void setPrincipales_inversores(List<Principales_Inversores> principales_inversores) {
-        this.principales_inversores = principales_inversores;
+    public void setPrincipales_inversiones(List<Principales_Inversiones> principales_inversiones) {
+        this.principales_inversiones = principales_inversiones;
     }
 
     public List<Plazo_Duracion> getPlazo_duraciones() {
@@ -213,6 +223,21 @@ public class Fic {
         this.plazo_duraciones = plazo_duraciones;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    // public String getUrl() {
+    //     return url;
+    // }
+
+    // public void setUrl(String url) {
+    //     this.url = url;
+    // }
 
 
 

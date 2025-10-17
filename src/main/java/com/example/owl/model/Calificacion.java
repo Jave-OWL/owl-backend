@@ -18,6 +18,11 @@ public class Calificacion {
     @Column(name = "id")
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fic_id")
+    @JsonBackReference
+    private Fic fic;
+
     @Column(name = "calificacion")
     private String calificacion;
 
@@ -29,10 +34,7 @@ public class Calificacion {
     @Column(name = "entidad_calificadora_normalizada")
     private Boolean entidad_calificadora_normalizada;
 
-   @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fic_id")
-    @JsonBackReference
-    private Fic fic;
+
 
     public Calificacion() {
     }

@@ -20,23 +20,25 @@ public class Plazo_Duracion {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "plazo")
-    private String plazo;
-
-    @Column(name = "participacion")
-    private float participacion;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fic_id")
     @JsonBackReference
     private Fic fic;
+
+    @Column(name = "plazo")
+    private String plazo;
+
+    @Column(name = "participacion")
+    private Float participacion;
+
+   
 
     public Plazo_Duracion() {
 
     }
 
 
-    public Plazo_Duracion(String plazo, float participacion, Fic fic) {
+    public Plazo_Duracion(String plazo, Float participacion, Fic fic) {
         this.plazo = plazo;
         this.participacion = participacion;
         this.fic = fic;
@@ -63,12 +65,12 @@ public class Plazo_Duracion {
     }
 
 
-    public float getParticipacion() {
+    public Float getParticipacion() {
         return participacion;
     }
 
 
-    public void setParticipacion(float participacion) {
+    public void setParticipacion(Float participacion) {
         this.participacion = participacion;
     }
 

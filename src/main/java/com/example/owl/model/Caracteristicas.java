@@ -20,27 +20,31 @@ public class Caracteristicas {
    @Column(name = "id")
    private Long id;
 
-   @Column(name = "tipo")
-   private String tipo;
-
-   @Column(name = "valor")
-   private float valor;
-   @Column(name = "fecha_inicio_operaciones")
-   private String fecha_inicio_operaciones;
-   @Column(name = "no_unidades_en_circulacion")
-   private float no_unidades_en_circulacion;
- 
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "fic_id")
    @JsonBackReference
    private Fic fic;
 
+   @Column(name = "tipo")
+   private String tipo;
+
+   @Column(name = "valor")
+   private Float valor;
+
+   @Column(name = "fecha_inicio_operaciones")
+   private String fecha_inicio_operaciones;
+   
+   @Column(name = "no_unidades_en_circulacion")
+   private Float no_unidades_en_circulacion;
+
+   
+
 
    public Caracteristicas() {
    }
 
-   public Caracteristicas(String tipo, float valor, String fecha_inicio_operaciones,
-         float no_unidades_en_circulacion, Fic fic) {
+   public Caracteristicas(String tipo, Float valor, String fecha_inicio_operaciones,
+         Float no_unidades_en_circulacion, Fic fic) {
       this.tipo = tipo;
       this.valor = valor;
       this.fecha_inicio_operaciones = fecha_inicio_operaciones;
@@ -60,15 +64,16 @@ public class Caracteristicas {
     return tipo;
    }
 
+
    public void setTipo(String tipo) {
     this.tipo = tipo;
    }
 
-   public float getValor() {
+   public Float getValor() {
     return valor;
    }
 
-   public void setValor(float valor) {
+   public void setValor(Float valor) {
     this.valor = valor;
    }
 
@@ -80,11 +85,11 @@ public class Caracteristicas {
     this.fecha_inicio_operaciones = fecha_inicio_operaciones;
    }
 
-   public float getNo_unidades_en_circulacion() {
+   public Float getNo_unidades_en_circulacion() {
     return no_unidades_en_circulacion;
    }
 
-   public void setNo_unidades_en_circulacion(float no_unidades_en_circulacion) {
+   public void setNo_unidades_en_circulacion(Float no_unidades_en_circulacion) {
     this.no_unidades_en_circulacion = no_unidades_en_circulacion;
    }
 

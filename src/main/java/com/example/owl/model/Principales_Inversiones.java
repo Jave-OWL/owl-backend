@@ -14,27 +14,29 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table (name = "principales_inversiones")
-public class Principales_Inversores {
+public class Principales_Inversiones {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(name = "emisor")
-    private String emisor;
-
-    @Column(name = "participacion")
-    private float participacion;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fic_id")
     @JsonBackReference
     private Fic fic;
 
-    public Principales_Inversores() {
+    @Column(name = "emisor")
+    private String emisor;
+
+    @Column(name = "participacion")
+    private Float participacion;
+
+ 
+
+    public Principales_Inversiones() {
 
     }
 
-    public Principales_Inversores(String emisor, float participacion, Fic fic) {
+    public Principales_Inversiones(String emisor, Float participacion, Fic fic) {
         this.emisor = emisor;
         this.participacion = participacion;
         this.fic = fic;
@@ -56,11 +58,11 @@ public class Principales_Inversores {
         this.emisor = emisor;
     }
 
-    public float getParticipacion() {
+    public Float getParticipacion() {
         return participacion;
     }
 
-    public void setParticipacion(float participacion) {
+    public void setParticipacion(Float participacion) {
         this.participacion = participacion;
     }
 
