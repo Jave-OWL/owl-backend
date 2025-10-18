@@ -1,38 +1,87 @@
 @base_url = http://localhost:8081
+@accept = application/json
 
-### Obtener todos los usuarios
-GET {{base_url}}/usuario/list
+############################
+# 🔐 AUTENTICACIÓN USUARIO
+############################
 
-### Obtener un usuario por id
-GET {{base_url}}/usuario/1
-
-### Intentar obtener un usuario inexistente
-GET {{base_url}}/usuario/1000
-
-### Crear un nuevo usuario
-POST {{base_url}}/usuario
+### 🆕 REGISTRO DE USUARIO
+POST {{base_url}}/auth/signup
 Content-Type: application/json
+Accept: {{accept}}
 
 {
-    "nombre": "Prueba",
-    "correo": "prueba@example.com",
-    "contrasenia": "123456",
-    "is_admin": false,
-    "nivel_riesgo": "Bajo"
+  "nombre": "Usuario Normal Prueba",
+  "correo": "userxd@owl.com",
+  "contrasenia": "123456",
+  "is_admin": false
 }
 
-### Actualizar un usuario existente
+### 🔑 LOGIN DE USUARIO
+# @name loginUser
+POST {{base_url}}/auth/login
+Content-Type: application/json
+Accept: {{accept}}
+
+{
+  "correo": "userxd@owl.com",
+  "contrasenia": "123456"
+}
+
+@token = {{loginUser.response.body.$.token}}
+
+### 👤 VER DATOS DE USUARIO Y ROLES
+GET {{base_url}}/auth/me
+Authorization: Bearer {{token}}
+Accept: {{accept}}
+
+############################
+# 👥 ENDPOINTS DE USUARIO
+############################
+
+### ✅ Obtener un usuario por id (requiere login)
+GET {{base_url}}/usuario/5
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyeGRAb3dsLmNvbSIsImlhdCI6MTc2MDgwMjcxMCwiZXhwIjoxNzYwODM4NzEwfQ.n4lNpBmQEhA54XhgePVH3gHb4tSZopQHPMNW2-PuvanEXxmUgVc_dYgv72spm0Es
+Accept: {{accept}}
+
+### ✅ Actualizar un usuario (permite autenticado)
 PUT {{base_url}}/usuario/update
+Authorization: Bearer {{token}}
 Content-Type: application/json
+Accept: {{accept}}
 
 {
-    "id": 2,
-    "nombre": "Miguel Ángel Barón",
-    "correo": "miguel@example.com",
-    "contrasenia": "123456",
-    "is_admin": true,
-    "nivel_riesgo": "Medio"
+  "id": 1,
+  "nombre": "Usuario OWL Actualizado",
+  "correo": "user@owl.com",
+  "contrasenia": "123456",
+  "is_admin": false,
+  "nivel_riesgo": "Bajo"
 }
 
-### Eliminar un usuario por id
-DELETE {{base_url}}/usuario/4
+############################
+# 📊 ENDPOINTS DE FIC
+############################
+
+### ✅ Obtener todos los FIC (requiere login)
+GET {{base_url}}/fic/list
+Authorization: Bearer {{token}}
+Accept: {{accept}}
+
+### ✅ Obtener FIC por ID (requiere login)
+GET {{base_url}}/fic/1
+Authorization: Bearer {{token}}
+Accept: {{accept}}
+
+############################
+# 🚫 PRUEBAS DE ERRORES
+############################
+
+### 401 — Sin token
+GET {{base_url}}/fic/list
+Accept: {{accept}}
+
+### 403 — Token válido pero endpoint restringido (si intentas admin)
+DELETE {{base_url}}/usuario/2
+Authorization: Bearer {{token}}
+Accept: {{accept}}

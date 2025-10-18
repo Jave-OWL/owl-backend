@@ -1,17 +1,89 @@
 @base_url = http://localhost:8081
 
-### Obtener todos los FIC
+### =============================
+### 1️⃣ REGISTRAR NUEVO USUARIO
+### =============================
+POST {{base_url}}/auth/signup
+Content-Type: application/json
+
+{
+  "nombre": "Pepito Perez",
+  "correo": "admin234@owl.com",
+  "contrasenia": "123456",
+  "is_admin": true
+}
+
+### Otro ejemplo de usuario normal (no admin)
+POST {{base_url}}/auth/signup
+Content-Type: application/json
+
+{
+  "nombre": "Usuario Normal",
+  "correo": "usuario@owl.com",
+  "contrasenia": "123456",
+  "is_admin": false
+}
+
+---
+
+### =============================
+### 2️⃣ LOGIN (OBTENER TOKEN JWT)
+### =============================
+POST {{base_url}}/auth/login
+Content-Type: application/json
+
+{
+  "correo": "admin234@owl.com",
+  "contrasenia": "123456"
+}
+
+### 👉 La respuesta será algo como:
+# {
+#   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+#   "email": "admin@owl.com",
+#   "is_admin": true
+# }
+
+---
+
+### =============================
+### 3️⃣ USAR TOKEN (COPIARLO ABAJO)
+### =============================
+# Reemplaza <JWT_TOKEN> por el token obtenido del login 👇
+@auth_token = Bearer <JWT_TOKEN>
+
+---
+
+### =============================
+### 4️⃣ LISTAR TODOS LOS FIC (REQUERIDO TOKEN)
+### =============================
 GET {{base_url}}/fic/list
+Authorization: {{auth_token}}
 
-### Obtener un FIC por id
-GET {{base_url}}/fic/1
+---
 
-### Intentar obtener un FIC inexistente
+### =============================
+### 5️⃣ OBTENER UN FIC POR ID
+### =============================
+GET {{base_url}}/fic/7
+Authorization: {{auth_token}}
+
+---
+
+### =============================
+### 6️⃣ OBTENER UN FIC INEXISTENTE
+### =============================
 GET {{base_url}}/fic/1000
+Authorization: {{auth_token}}
 
-### Crear un nuevo FIC
+---
+
+### =============================
+### 7️⃣ CREAR UN NUEVO FIC (TOKEN REQUERIDO)
+### =============================
 POST {{base_url}}/fic/create
 Content-Type: application/json
+Authorization: {{auth_token}}
 
 {
   "nombre_fic": "FONDO NUEVO",
@@ -30,10 +102,14 @@ Content-Type: application/json
   "plazo_duraciones": []
 }
 
-### Actualizar un FIC existente (si agregas el método PUT más adelante)
-### Actualizar un FIC existente
+---
+
+### =============================
+### 8️⃣ ACTUALIZAR UN FIC EXISTENTE
+### =============================
 PUT {{base_url}}/fic/update
 Content-Type: application/json
+Authorization: {{auth_token}}
 
 {
   "id": 2,
@@ -45,5 +121,10 @@ Content-Type: application/json
   "nivel_riesgo": "Alto"
 }
 
-### Eliminar un FIC por id
+---
+
+### =============================
+### 9️⃣ ELIMINAR UN FIC POR ID (SOLO ADMIN)
+### =============================
 DELETE {{base_url}}/fic/1
+Authorization: {{auth_token}}
