@@ -1,0 +1,49 @@
+@base_url = http://localhost:8081
+
+### Obtener todos los FIC
+GET {{base_url}}/fic/list
+
+### Obtener un FIC por id
+GET {{base_url}}/fic/1
+
+### Intentar obtener un FIC inexistente
+GET {{base_url}}/fic/1000
+
+### Crear un nuevo FIC
+POST {{base_url}}/fic/create
+Content-Type: application/json
+
+{
+  "nombre_fic": "FONDO NUEVO",
+  "gestor": "FIDUCIARIA DE OCCIDENTE S.A.",
+  "custodio": "CITI TRUST COLOMBIA S.A.",
+  "fecha_corte": "2025-10-18",
+  "politica_de_inversion": "Portafolio enfocado en renta fija con estrategias de bajo riesgo y liquidez inmediata.",
+  "nivel_riesgo": "Medio",
+  "tipo": "Abierto",
+  "calificaciones": [],
+  "caracteristicas": [],
+  "composicion_portafolios": [],
+  "volatilidad_historicas": [],
+  "rentabilidad_historicas": [],
+  "principales_inversiones": [],
+  "plazo_duraciones": []
+}
+
+### Actualizar un FIC existente (si agregas el método PUT más adelante)
+### Actualizar un FIC existente
+PUT {{base_url}}/fic/update
+Content-Type: application/json
+
+{
+  "id": 2,
+  "nombre_fic": "META PLANEADA - Actualizado",
+  "gestor": "FIDUCIARIA DE OCCIDENTE S.A.",
+  "custodio": "CITI TRUST COLOMBIA S.A.",
+  "fecha_corte": "2025-10-20",
+  "politica_de_inversion": "Actualización del portafolio con nuevos criterios de inversión.",
+  "nivel_riesgo": "Alto"
+}
+
+### Eliminar un FIC por id
+DELETE {{base_url}}/fic/1

@@ -30,4 +30,12 @@ public class FicService {
     public void deleteFic(Long id) {
         ficRepository.deleteById(id);
     }
+
+    public Fic updateFic(Fic fic) {
+        if (ficRepository.existsById(fic.getId())) {
+            return ficRepository.save(fic);
+        } else {
+            throw new RuntimeException("Fic no encontrado con id: " + fic.getId());
+        }
+    }
 }

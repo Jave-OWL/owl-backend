@@ -1,0 +1,38 @@
+@base_url = http://localhost:8081
+
+### Obtener todos los usuarios
+GET {{base_url}}/usuario/list
+
+### Obtener un usuario por id
+GET {{base_url}}/usuario/1
+
+### Intentar obtener un usuario inexistente
+GET {{base_url}}/usuario/1000
+
+### Crear un nuevo usuario
+POST {{base_url}}/usuario
+Content-Type: application/json
+
+{
+    "nombre": "Prueba",
+    "correo": "prueba@example.com",
+    "contrasenia": "123456",
+    "is_admin": false,
+    "nivel_riesgo": "Bajo"
+}
+
+### Actualizar un usuario existente
+PUT {{base_url}}/usuario/update
+Content-Type: application/json
+
+{
+    "id": 2,
+    "nombre": "Miguel Ángel Barón",
+    "correo": "miguel@example.com",
+    "contrasenia": "123456",
+    "is_admin": true,
+    "nivel_riesgo": "Medio"
+}
+
+### Eliminar un usuario por id
+DELETE {{base_url}}/usuario/4

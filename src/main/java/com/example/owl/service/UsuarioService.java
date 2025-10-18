@@ -22,10 +22,17 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
-    public Usuario Usuario(Usuario usuario) {
+    public Usuario createUsuario(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
     
+    public Usuario updateUsuario(Usuario usuario) {
+    if (usuarioRepository.existsById(usuario.getId())) {
+        return usuarioRepository.save(usuario);
+    } else {
+        throw new RuntimeException("Usuario no encontrado con id: " + usuario.getId());
+    }
+}
     public void deleteUsuario(Long id) {
         usuarioRepository.deleteById(id);
     }
