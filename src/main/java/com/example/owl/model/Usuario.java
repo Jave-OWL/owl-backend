@@ -39,17 +39,21 @@ public class Usuario {
     @Column(name = "nivel_riesgo")
     private String nivel_riesgo;
 
+    @Column(name = "fecha_nacimiento")
+    private String fecha_nacimiento;
+
     @OneToMany(mappedBy = "usuario")
     private List<Fic_Recomendado> fics_recomendados;
 
     public Usuario() {
     }
 
-    public Usuario(String nombre, String correo, String contrasenia, Boolean is_admin, String nivel_riesgo) {
+    public Usuario(String nombre, String correo, String contrasenia, Boolean is_admin, String fecha_nacimiento, String nivel_riesgo) {
         this.nombre = nombre;
         this.correo = correo;
         this.contrasenia = contrasenia;
         this.is_admin = is_admin;
+        this.fecha_nacimiento = fecha_nacimiento;
         this.nivel_riesgo = nivel_riesgo;
     }
 
@@ -101,6 +105,13 @@ public class Usuario {
         this.nivel_riesgo = nivel_riesgo;
     }
 
+    public String getFecha_nacimiento() {
+        return fecha_nacimiento;
+    }
+
+    public void setFecha_nacimiento(String fecha_nacimiento) {
+        this.fecha_nacimiento = fecha_nacimiento;
+    }
 
     
     

@@ -10,6 +10,8 @@ public class UsuarioRegistrationDTO{
      @JsonProperty("is_admin")
     private Boolean is_admin;
 
+   
+
     public UsuarioRegistrationDTO() {
     }
 
@@ -19,6 +21,7 @@ public class UsuarioRegistrationDTO{
         this.contrasenia = contrasenia;
         this.fecha_nacimiento = fecha_nacimiento;
         this.is_admin = is_admin;
+        this.fecha_nacimiento = fecha_nacimiento;
     }
 
     public String getNombre() {

@@ -50,6 +50,7 @@ public class AuthenticationService {
         // usuario.setFecha_nacimiento(request.getFecha_nacimiento());
         usuario.setContrasenia(passwordEncoder.encode(request.getContrasenia()));
         usuario.setIs_admin(request.Is_admin());
+        usuario.setFecha_nacimiento(request.getFecha_nacimiento());
         // Si tu DTO trae esto y tu entidad lo tiene:
         // usuario.setIs_admin(Boolean.TRUE.equals(request.getIsAdmin()));
         // usuario.setNivel_riesgo(request.getNivelRiesgo());

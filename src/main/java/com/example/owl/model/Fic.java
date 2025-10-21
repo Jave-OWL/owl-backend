@@ -41,8 +41,8 @@ public class Fic {
     @Column(name = "tipo")
     private String tipo;
 
-    //@Column(name = "url")
-    //private String url;
+    @Column(name = "url")
+    private String url;
 
     @OneToMany(mappedBy = "fic")
     private List<Fic_Recomendado> usuarios_recomendados;
@@ -100,7 +100,7 @@ public class Fic {
         this.principales_inversiones = principales_inversiones;
         this.plazo_duraciones = plazo_duraciones;
         this.tipo = tipo;
-       // this.url = url;
+        this.url = url;
     }
 
     public Long getId() {
@@ -231,13 +231,13 @@ public class Fic {
         this.tipo = tipo;
     }
 
-    // public String getUrl() {
-    //     return url;
-    // }
+    public String getUrl() {
+        return url;
+    }
 
-    // public void setUrl(String url) {
-    //     this.url = url;
-    // }
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
 
 
