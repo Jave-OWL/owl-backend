@@ -38,4 +38,11 @@ public class FicService {
             throw new RuntimeException("Fic no encontrado con id: " + fic.getId());
         }
     }
+
+
+    public List<Fic> getFicsByNivelRiesgo(String nivelRiesgo) {
+        return ficRepository.findByTipoIgnoreCase(nivelRiesgo);
+    }
+
+    
 }

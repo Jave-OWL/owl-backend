@@ -44,6 +44,8 @@ public class Fic {
     @Column(name = "url")
     private String url;
 
+ 
+
     @OneToMany(mappedBy = "fic")
     private List<Fic_Recomendado> usuarios_recomendados;
 
@@ -79,7 +81,7 @@ public class Fic {
 
     }
 
-    public Fic(Long id, String nombre_fic, String gestor, String custodio, String fecha_corte, String politica_de_inversion, String nivel_riesgo,
+    public Fic(Long id, String nombre_fic, String gestor, String custodio, String fecha_corte, String politica_de_inversion, 
                List<Usuario> usuarios_recomendados, List<Calificacion> calificaciones, List<Caracteristicas> caracteristicas,
                List<Composicion_Portafolio> composicion_portafolios, List<Volatilidad_Historica> volatilidad_historicas,
                List<Rentabilidad_Historica> rentabilidad_historicas, List<Principales_Inversiones> principales_inversiones,
@@ -90,7 +92,7 @@ public class Fic {
         this.custodio = custodio;
         this.fecha_corte = fecha_corte;
         this.politica_de_inversion = politica_de_inversion;
-        // this.nivel_riesgo = nivel_riesgo;
+        
         // this.usuarios_recomendados = usuarios_recomendados;
         this.calificaciones = calificaciones;
         this.caracteristicas = caracteristicas;
@@ -151,21 +153,6 @@ public class Fic {
         this.politica_de_inversion = politica_de_inversion;
     }
 
-    // public String getNivel_riesgo() {
-    //     return nivel_riesgo;
-    // }
-
-    // public void setNivel_riesgo(String nivel_riesgo) {
-    //     this.nivel_riesgo = nivel_riesgo;
-    // }
-
-    // public List<Usuario> getUsuariosRecomendados() {
-    //     return usuarios_recomendados;
-    // }
-
-    // public void setUsuariosRecomendados(List<Usuario> usuarios_recomendados) {
-    //     this.usuarios_recomendados = usuarios_recomendados;
-    // }
 
     public List<Calificacion> getCalificaciones() {
         return calificaciones;
@@ -238,6 +225,7 @@ public class Fic {
     public void setUrl(String url) {
         this.url = url;
     }
+
 
 
 

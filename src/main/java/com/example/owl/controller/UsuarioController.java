@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.owl.model.Usuario;
@@ -48,4 +50,18 @@ public class UsuarioController {
     public void eliminarUsuario(@PathVariable Long id) {
         usuarioService.deleteUsuario(id);
     }
+
+
+@PreAuthorize("isAuthenticated()")
+@GetMapping("/me")
+public Usuario obtenerUsuarioActual() {
+    // Obtener el usuario autenticado
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    String username = auth.getName(); // normalmente es el correo o username del token JWT
+
+    // Buscar el usuario en la base de datos
+    return usuarioService.findByCorreo(username)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + username));
+}
+
 }
