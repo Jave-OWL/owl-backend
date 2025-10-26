@@ -12,6 +12,8 @@ import com.example.owl.model.Usuario;
 import com.example.owl.repository.FicRepository;
 import com.example.owl.repository.Fic_RecomendadosRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class Fic_RecomendadosService {
      @Autowired
@@ -20,6 +22,7 @@ public class Fic_RecomendadosService {
     @Autowired
     private Fic_RecomendadosRepository ficRecomendadoRepository;
 
+    @Transactional
     public void asignarFicsRecomendados(Usuario usuario) {
 
     ficRecomendadoRepository.deleteByUsuario(usuario);
@@ -33,11 +36,11 @@ public class Fic_RecomendadosService {
             ficsSeleccionados = ficRepository.findByTipoIgnoreCase("Renta fija");
             break;
         case "moderado":
-            ficsSeleccionados = ficRepository.findByTipoIgnoreCase("Mixto");
+            ficsSeleccionados = ficRepository.findByTipoIgnoreCase("Renta mixta");
             break;
         case "arriesgado":
             ficsSeleccionados = ficRepository.findByTipoInIgnoreCase(
-                    List.of("Alternativo", "Variable"));
+                    List.of("Renta alternativa", "Renta variable"));
             break;
         default:
             return;
