@@ -1,16 +1,16 @@
 package com.example.owl.DTO;
+
 public class JwtAuthenticationResponse {
     private String token;
     private String email;
-    private boolean is_admin;
+    private boolean admin;
 
-    public JwtAuthenticationResponse() {
-    }
+    public JwtAuthenticationResponse() {}
 
-    public JwtAuthenticationResponse(String token, String email, boolean is_admin) {
+    public JwtAuthenticationResponse(String token, String email, boolean admin) {
         this.token = token;
         this.email = email;
-        this.is_admin = is_admin;
+        this.admin = admin;
     }
 
     public String getToken() {
@@ -29,11 +29,11 @@ public class JwtAuthenticationResponse {
         this.email = email;
     }
 
-    public boolean getIs_admin() {
-        return is_admin;
+    public boolean isAdmin() {
+        return admin;
     }
 
-    public void setIs_admin(boolean is_admin) {
-        this.is_admin = is_admin;
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }

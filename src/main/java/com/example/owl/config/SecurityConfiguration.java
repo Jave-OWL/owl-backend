@@ -51,14 +51,20 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/auth/**").permitAll()
+
                 .requestMatchers("/db/health").permitAll()
 
-                .requestMatchers("/usuario/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/usuario/**").authenticated()
+                .requestMatchers(HttpMethod.POST, "/usuario/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/usuario/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/usuario/**").hasRole("ADMIN")
+
+
                 .requestMatchers(HttpMethod.POST, "/fic/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/fic/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/fic/**").hasRole("ADMIN")
-
                 .requestMatchers(HttpMethod.GET, "/fic/**").authenticated()
+
                 .anyRequest().authenticated()
             )
             .headers(h -> h.frameOptions(f -> f.disable())) // si usas H2

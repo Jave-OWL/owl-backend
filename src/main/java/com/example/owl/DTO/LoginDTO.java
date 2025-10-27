@@ -13,19 +13,19 @@ public class LoginDTO {
         this.contrasenia = contrasenia;
     }
 
-    public String getcorreo() {
+    public String getCorreo() {
         return correo;
     }
 
-    public void setcorreo(String correo) {
+    public void setCorreo(String correo) {
         this.correo = correo;
     }
 
-    public String getcontrasenia() {
+    public String getContrasenia() {
         return contrasenia;
     }
 
-    public void setcontrasenia(String contrasenia) {
+    public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
 

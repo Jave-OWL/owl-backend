@@ -28,7 +28,8 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<JwtAuthenticationResponse> login(@RequestBody LoginDTO request) {
-        return ResponseEntity.ok(authenticationService.login(request));
+        JwtAuthenticationResponse jwt = authenticationService.login(request);
+    return ResponseEntity.ok(jwt);
     }
 
 }

@@ -33,14 +33,14 @@ public class Fic_RecomendadosService {
 
     switch (perfil) {
         case "conservador":
-            ficsSeleccionados = ficRepository.findByTipoIgnoreCase("Renta fija");
+            ficsSeleccionados = ficRepository.findByTipoIgnoreCase("Renta Fija");
             break;
         case "moderado":
-            ficsSeleccionados = ficRepository.findByTipoIgnoreCase("Renta mixta");
+            ficsSeleccionados = ficRepository.findByTipoIgnoreCase("Renta Mixta");
             break;
         case "arriesgado":
             ficsSeleccionados = ficRepository.findByTipoInIgnoreCase(
-                    List.of("Renta alternativa", "Renta variable"));
+                    List.of("Alternativa", "Renta Variable"));
             break;
         default:
             return;

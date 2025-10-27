@@ -11,6 +11,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -35,7 +36,8 @@ public class Fic {
     @Column(name = "fecha_corte")
     private String fecha_corte;
 
-    @Column(name = "politica_de_inversion")
+    @Lob
+    @Column(name = "politica_de_inversion", columnDefinition = "TEXT")
     private String politica_de_inversion;
 
     @Column(name = "tipo")

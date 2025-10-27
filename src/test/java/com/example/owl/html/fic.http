@@ -33,9 +33,10 @@ POST {{base_url}}/auth/login
 Content-Type: application/json
 
 {
-  "correo": "admin234@owl.com",
+  "correo": "miguelbaronm@hotmail.com",
   "contrasenia": "123456"
 }
+
 
 ### 👉 La respuesta será algo como:
 # {
@@ -50,7 +51,7 @@ Content-Type: application/json
 ### 3️⃣ USAR TOKEN (COPIARLO ABAJO)
 ### =============================
 # Reemplaza <JWT_TOKEN> por el token obtenido del login 👇
-@auth_token = Bearer <JWT_TOKEN>
+@auth_token = Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtaWd1ZWxiYXJvbm1AaG90bWFpbC5jb20iLCJpYXQiOjE3NjE1NzQyMzQsImV4cCI6MTc2MTYxMDIzNH0.YUY2y5dOLqywe3ZqGzSpUjwwOIJOk60dIVN59HQ-DsNrA6plLI86HY6-MBqAFWPH
 
 ---
 

@@ -70,7 +70,7 @@ public class AuthenticationService {
      * Inicio de sesión
      */
     public JwtAuthenticationResponse login(LoginDTO request) {
-        if (request.getcorreo() == null || request.getcontrasenia() == null) {
+        if (request.getCorreo() == null || request.getContrasenia() == null) {
             throw new IllegalArgumentException("Correo y contraseña son obligatorios.");
         }
 
@@ -78,15 +78,15 @@ public class AuthenticationService {
             if (authenticationManager != null) {
                 authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(
-                                request.getcorreo(),
-                                request.getcontrasenia()
+                                request.getCorreo(),
+                                request.getContrasenia()
                         )
                 );
             } else {
                 // Validación manual si no tienes AuthenticationManager configurado
-                Usuario probe = usuarioRepository.findByCorreo(request.getcorreo())
+                Usuario probe = usuarioRepository.findByCorreo(request.getCorreo())
                         .orElseThrow(() -> new IllegalArgumentException("Correo o contraseña incorrectos."));
-                if (!passwordEncoder.matches(request.getcontrasenia(), probe.getContrasenia())) {
+                if (!passwordEncoder.matches(request.getContrasenia(), probe.getContrasenia())) {
                     throw new IllegalArgumentException("Correo o contraseña incorrectos.");
                 }
             }
@@ -95,7 +95,7 @@ public class AuthenticationService {
             throw new IllegalArgumentException("Correo o contraseña incorrectos.");
         }
 
-        Usuario usuario = usuarioRepository.findByCorreo(request.getcorreo())
+        Usuario usuario = usuarioRepository.findByCorreo(request.getCorreo())
                 .orElseThrow(() -> new IllegalArgumentException("Correo o contraseña incorrectos."));
 
         String jwt = jwtService.generateToken(usuario.getCorreo());

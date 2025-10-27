@@ -1,87 +1,85 @@
 @base_url = http://localhost:8081
-@accept = application/json
 
-############################
-# 🔐 AUTENTICACIÓN USUARIO
-############################
 
-### 🆕 REGISTRO DE USUARIO
-POST {{base_url}}/auth/signup
-Content-Type: application/json
-Accept: {{accept}}
 
-{
-  "nombre": "Usuario Normal Prueba",
-  "correo": "userxd@owl.com",
-  "contrasenia": "123456",
-  "is_admin": false
-}
+### =============================
+### 🔐 VARIABLES DE AUTENTICACIÓN
+### =============================
 
-### 🔑 LOGIN DE USUARIO
-# @name loginUser
+### Primero debes iniciar sesión y obtener tu token JWT:
 POST {{base_url}}/auth/login
 Content-Type: application/json
-Accept: {{accept}}
 
 {
-  "correo": "userxd@owl.com",
+  "correo": "miguelbaronm@hotmail.com",
   "contrasenia": "123456"
 }
 
-@token = {{loginUser.response.body.$.token}}
+### Copia el token JWT de la respuesta y pégalo abajo:
+@auth_token = Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtaWd1ZWxiYXJvbm1AaG90bWFpbC5jb20iLCJpYXQiOjE3NjE1NzQyMzQsImV4cCI6MTc2MTYxMDIzNH0.YUY2y5dOLqywe3ZqGzSpUjwwOIJOk60dIVN59HQ-DsNrA6plLI86HY6-MBqAFWPH
 
-### 👤 VER DATOS DE USUARIO Y ROLES
-GET {{base_url}}/auth/me
-Authorization: Bearer {{token}}
-Accept: {{accept}}
 
-############################
-# 👥 ENDPOINTS DE USUARIO
-############################
+### =============================
+### 1️⃣ LISTAR TODOS LOS USUARIOS (SOLO ADMIN)
+### =============================
+GET {{base_url}}/usuario/list
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtaWd1ZWxiYXJvbm1AaG90bWFpbC5jb20iLCJpYXQiOjE3NjE1NzQyMzQsImV4cCI6MTc2MTYxMDIzNH0.YUY2y5dOLqywe3ZqGzSpUjwwOIJOk60dIVN59HQ-DsNrA6plLI86HY6-MBqAFWPH
 
-### ✅ Obtener un usuario por id (requiere login)
-GET {{base_url}}/usuario/5
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyeGRAb3dsLmNvbSIsImlhdCI6MTc2MDgwMjcxMCwiZXhwIjoxNzYwODM4NzEwfQ.n4lNpBmQEhA54XhgePVH3gHb4tSZopQHPMNW2-PuvanEXxmUgVc_dYgv72spm0Es
-Accept: {{accept}}
+---
 
-### ✅ Actualizar un usuario (permite autenticado)
-PUT {{base_url}}/usuario/update
-Authorization: Bearer {{token}}
+### =============================
+### 2️⃣ OBTENER UN USUARIO POR ID (SOLO ADMIN)
+### =============================
+GET {{base_url}}/usuario/1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtaWd1ZWxiYXJvbm1AaG90bWFpbC5jb20iLCJpYXQiOjE3NjE1NzQyMzQsImV4cCI6MTc2MTYxMDIzNH0.YUY2y5dOLqywe3ZqGzSpUjwwOIJOk60dIVN59HQ-DsNrA6plLI86HY6-MBqAFWPH
+
+---
+
+### =============================
+### 3️⃣ CREAR UN NUEVO USUARIO (SOLO ADMIN)
+### =============================
+POST {{base_url}}/usuario
 Content-Type: application/json
-Accept: {{accept}}
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtaWd1ZWxiYXJvbm1AaG90bWFpbC5jb20iLCJpYXQiOjE3NjE1NzQyMzQsImV4cCI6MTc2MTYxMDIzNH0.YUY2y5dOLqywe3ZqGzSpUjwwOIJOk60dIVN59HQ-DsNrA6plLI86HY6-MBqAFWPH
+
+{
+  "nombre": "Juan Pérez",
+  "correo": "juanperez@example.com",
+  "contrasenia": "123456",
+  "rol": "USER"
+}
+
+---
+
+### =============================
+### 4️⃣ ACTUALIZAR UN USUARIO (SOLO ADMIN)
+### =============================
+PUT {{base_url}}/usuario/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtaWd1ZWxiYXJvbm1AaG90bWFpbC5jb20iLCJpYXQiOjE3NjE1NzQyMzQsImV4cCI6MTc2MTYxMDIzNH0.YUY2y5dOLqywe3ZqGzSpUjwwOIJOk60dIVN59HQ-DsNrA6plLI86HY6-MBqAFWPH
 
 {
   "id": 1,
-  "nombre": "Usuario OWL Actualizado",
-  "correo": "user@owl.com",
+  "nombre": "Juan Pérez Actualizado",
+  "correo": "juanperez@example.com",
   "contrasenia": "123456",
-  "is_admin": false,
-  "nivel_riesgo": "Bajo"
+  "rol": "ADMIN"
 }
 
-############################
-# 📊 ENDPOINTS DE FIC
-############################
+---
 
-### ✅ Obtener todos los FIC (requiere login)
-GET {{base_url}}/fic/list
-Authorization: Bearer {{token}}
-Accept: {{accept}}
+### =============================
+### 5️⃣ ELIMINAR UN USUARIO POR ID (SOLO ADMIN)
+### =============================
+DELETE {{base_url}}/usuario/1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtaWd1ZWxiYXJvbm1AaG90bWFpbC5jb20iLCJpYXQiOjE3NjE1NzQyMzQsImV4cCI6MTc2MTYxMDIzNH0.YUY2y5dOLqywe3ZqGzSpUjwwOIJOk60dIVN59HQ-DsNrA6plLI86HY6-MBqAFWPH
 
-### ✅ Obtener FIC por ID (requiere login)
-GET {{base_url}}/fic/1
-Authorization: Bearer {{token}}
-Accept: {{accept}}
+---
 
-############################
-# 🚫 PRUEBAS DE ERRORES
-############################
+### =============================
+### 6️⃣ OBTENER USUARIO AUTENTICADO (TOKEN REQUERIDO)
+### =============================
+GET {{base_url}}/usuario/me
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtaWd1ZWxiYXJvbm1AaG90bWFpbC5jb20iLCJpYXQiOjE3NjE1ODg0NzQsImV4cCI6MTc2MTYyNDQ3NH0.NNqJ3OHKBGW144uVGqPP3sS2Tfha5j7_wI5_DlOhSLIq6tWYpLkawuL_XH_bZJPl
 
-### 401 — Sin token
-GET {{base_url}}/fic/list
-Accept: {{accept}}
-
-### 403 — Token válido pero endpoint restringido (si intentas admin)
-DELETE {{base_url}}/usuario/2
-Authorization: Bearer {{token}}
-Accept: {{accept}}
+---

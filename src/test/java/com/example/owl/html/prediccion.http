@@ -1,0 +1,16 @@
+@base_url = http://localhost:8081
+
+### LOGIN - Obtener token JWT
+POST {{base_url}}/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "correo": "juanito123@gmail.com",
+  "contrasenia": "123456"
+}
+
+### CONSULTAR FICS RECOMENDADOS - requiere token
+GET {{base_url}}/prediccion/list
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuaXRvMTIzQGdtYWlsLmNvbSIsImlhdCI6MTc2MTU3NTkxMCwiZXhwIjoxNzYxNjExOTEwfQ.h8IhAPpOTL8Q74UJwwUk_lmvIgkoFjLWZiDS7_CzuSUkvAX9pz9EKdGdBkV-TPtW
+Accept: application/json
