@@ -36,8 +36,8 @@ public class Fic {
     @Column(name = "fecha_corte")
     private String fecha_corte;
 
-    @Lob
-    @Column(name = "politica_de_inversion", columnDefinition = "TEXT")
+    
+    @Column(name = "politica_de_inversion", length = 2000)
     private String politica_de_inversion;
 
     @Column(name = "tipo")

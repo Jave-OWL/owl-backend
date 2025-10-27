@@ -31,9 +31,13 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
-    public Usuario createUsuario(Usuario usuario) {
-        return usuarioRepository.save(usuario);
+  public Usuario createUsuario(Usuario usuario) {
+    if (usuarioRepository.existsByCorreo(usuario.getCorreo())) {
+        throw new RuntimeException("Usuario ya existe");
     }
+    return usuarioRepository.save(usuario);
+}
+
     
     public Usuario updateUsuario(Usuario usuario) {
     if (usuarioRepository.existsById(usuario.getId())) {
