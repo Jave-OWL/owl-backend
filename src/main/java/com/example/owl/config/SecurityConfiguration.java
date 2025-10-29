@@ -63,7 +63,7 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.POST, "/fic/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/fic/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/fic/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.GET, "/fic/**").authenticated()
+                .requestMatchers(HttpMethod.GET, "/fic/**").permitAll()  //  a ver si funciona
 
                 .anyRequest().authenticated()
             )
