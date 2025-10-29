@@ -19,7 +19,7 @@ import com.example.owl.service.UsuarioService;
 
 @RestController
 @RequestMapping("/fic")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"https://owl.bridgecare.com.co", "http://localhost:4200"})
 public class FicController {
 
     @Autowired

@@ -102,7 +102,8 @@ public class SecurityConfiguration {
             "http://localhost",
             "http://localhost:80",
             "http://localhost:4200",
-            "http://127.0.0.1"
+            "http://127.0.0.1",
+            "https://owl.bridgecare.com.co"
         ));
         cfg.setAllowedMethods(List.of("GET","POST","PUT","DELETE","PATCH","OPTIONS"));
         cfg.setAllowedHeaders(List.of("Authorization","Content-Type","Origin","Accept"));
