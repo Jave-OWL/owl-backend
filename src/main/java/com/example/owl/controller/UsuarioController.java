@@ -1,12 +1,16 @@
 package com.example.owl.controller;
 
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.owl.DTO.PasswordChangeDTO;
+import com.example.owl.DTO.UsuarioEditDTO;
 import com.example.owl.model.Usuario;
 import com.example.owl.service.UsuarioService;
 
@@ -63,4 +67,52 @@ public class UsuarioController {
         return usuarioService.findByCorreo(username)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + username));
     }
+
+    // 🔹 Editar información del usuario autenticado (nombre, correo, fecha_nacimiento)
+    @PreAuthorize("isAuthenticated()")
+    @PutMapping("/me")
+    public ResponseEntity<?> editarUsuarioActual(@RequestBody UsuarioEditDTO usuarioEditDTO) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Usuario usuario = usuarioService.findByCorreo(username)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + username));
+        
+        // Verificar si el correo cambió
+        boolean correoChanged = usuarioEditDTO.getCorreo() != null && 
+                                !usuarioEditDTO.getCorreo().trim().equalsIgnoreCase(usuario.getCorreo().trim());
+        
+        Usuario usuarioActualizado = usuarioService.updateUsuarioInfo(
+            usuario.getId(),
+            usuarioEditDTO.getNombre(),
+            usuarioEditDTO.getCorreo(),
+            usuarioEditDTO.getFecha_nacimiento()
+        );
+        
+        // Si el correo cambió, indicar al frontend que debe re-autenticarse
+        if (correoChanged) {
+            return ResponseEntity.ok()
+                .header("X-Auth-Required", "true")
+                .body(Map.of(
+                    "usuario", usuarioActualizado,
+                    "requiresReAuth", true,
+                    "message", "Correo actualizado. Por favor, inicie sesión nuevamente."
+                ));
+        }
+        
+        return ResponseEntity.ok(usuarioActualizado);
+    }
+
+    // 🔹 Cambiar contraseña del usuario autenticado
+    @PreAuthorize("isAuthenticated()")
+    @PutMapping("/me/password")
+    public void cambiarContrasenia(@RequestBody PasswordChangeDTO passwordChangeDTO) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Usuario usuario = usuarioService.findByCorreo(username)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + username));
+        
+        usuarioService.updatePassword(usuario.getId(), passwordChangeDTO.getContrasenia());
+    }
+
+    
 }
