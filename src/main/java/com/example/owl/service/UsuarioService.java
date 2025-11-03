@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,6 +40,7 @@ public class UsuarioService {
     if (usuarioRepository.existsByCorreo(usuario.getCorreo())) {
         throw new RuntimeException("Usuario ya existe");
     }
+    usuario.setContrasenia(passwordEncoder.encode(usuario.getContrasenia()));
     return usuarioRepository.save(usuario);
 }
 

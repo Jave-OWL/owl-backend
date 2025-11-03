@@ -1,11 +1,6 @@
 package com.example.owl.service;
 
 
-import com.example.owl.DTO.JwtAuthenticationResponse;
-import com.example.owl.DTO.LoginDTO;
-import com.example.owl.DTO.UsuarioRegistrationDTO;
-import com.example.owl.model.Usuario;
-import com.example.owl.repository.UsuarioRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +9,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.example.owl.DTO.JwtAuthenticationResponse;
+import com.example.owl.DTO.LoginDTO;
+import com.example.owl.DTO.UsuarioRegistrationDTO;
+import com.example.owl.model.Usuario;
+import com.example.owl.repository.UsuarioRepository;
 
 @Service
 public class AuthenticationService {
@@ -46,14 +47,9 @@ public class AuthenticationService {
         Usuario usuario = new Usuario();
         usuario.setNombre(request.getNombre());
         usuario.setCorreo(request.getCorreo());
-        // Si manejas fecha_nacimiento en la entidad y DTO, descomenta:
-        // usuario.setFecha_nacimiento(request.getFecha_nacimiento());
         usuario.setContrasenia(passwordEncoder.encode(request.getContrasenia()));
         usuario.setIs_admin(request.Is_admin());
         usuario.setFecha_nacimiento(request.getFecha_nacimiento());
-        // Si tu DTO trae esto y tu entidad lo tiene:
-        // usuario.setIs_admin(Boolean.TRUE.equals(request.getIsAdmin()));
-        // usuario.setNivel_riesgo(request.getNivelRiesgo());
 
         usuarioRepository.save(usuario);
 

@@ -2,12 +2,21 @@ package com.example.owl.controller;
 
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.owl.DTO.PasswordChangeDTO;
 import com.example.owl.DTO.UsuarioEditDTO;
@@ -38,7 +47,7 @@ public class UsuarioController {
 
     // 🔹 Crear un nuevo usuario (solo ADMIN)
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping
+    @PostMapping("/create")
     public Usuario crearUsuario(@RequestBody Usuario usuario) {
         return usuarioService.createUsuario(usuario);
     }
@@ -48,6 +57,12 @@ public class UsuarioController {
     @PutMapping("/update")
     public Usuario actualizarUsuario(@RequestBody Usuario usuario) {
         return usuarioService.updateUsuario(usuario);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/delete/{id}")
+    public void deleteUsuario(@PathVariable Long id) {
+        usuarioService.deleteUsuario(id);
     }
 
     // 🔹 Eliminar un usuario por ID (solo ADMIN)
