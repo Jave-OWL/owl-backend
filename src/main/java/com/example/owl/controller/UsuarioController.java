@@ -31,31 +31,39 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    // 🔹 Obtener todos los usuarios (solo ADMIN)
+    // Obtener todos los usuarios (solo ADMIN)
     
     @GetMapping("/list")
     public List<Usuario> obtenerUsuarios() {
         return usuarioService.getAllUsuarios();
     }
 
-    // 🔹 Obtener un usuario por ID (solo ADMIN)
+    // Obtener un usuario por ID (solo ADMIN)
   
     @GetMapping("/{id}")
     public Usuario obtenerUsuarioPorId(@PathVariable Long id) {
         return usuarioService.getUsuarioById(id).orElse(null);
     }
 
-    // 🔹 Crear un nuevo usuario (solo ADMIN)
+    // Crear un nuevo usuario (solo ADMIN)
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public Usuario crearUsuario(@RequestBody Usuario usuario) {
         return usuarioService.createUsuario(usuario);
     }
 
-    // 🔹 Actualizar un usuario (solo ADMIN)
+    // Actualizar un usuario (solo ADMIN)
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update")
     public Usuario actualizarUsuario(@RequestBody Usuario usuario) {
+        return usuarioService.updateUsuario(usuario);
+    }
+
+    // Actualizar un usuario por ID (solo ADMIN)
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}")
+    public Usuario actualizarUsuarioPorId(@PathVariable Long id, @RequestBody Usuario usuario) {
+        usuario.setId(id);
         return usuarioService.updateUsuario(usuario);
     }
 
@@ -65,14 +73,14 @@ public class UsuarioController {
         usuarioService.deleteUsuario(id);
     }
 
-    // 🔹 Eliminar un usuario por ID (solo ADMIN)
+    // Eliminar un usuario por ID (solo ADMIN)
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public void eliminarUsuario(@PathVariable Long id) {
         usuarioService.deleteUsuario(id);
     }
 
-    // 🔹 Obtener usuario autenticado (cualquier usuario logueado)
+    // Obtener usuario autenticado (cualquier usuario logueado)
     
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/me")
@@ -83,7 +91,7 @@ public class UsuarioController {
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + username));
     }
 
-    // 🔹 Editar información del usuario autenticado (nombre, correo, fecha_nacimiento)
+    // Editar información del usuario autenticado (nombre, correo, fecha_nacimiento)
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/me")
     public ResponseEntity<?> editarUsuarioActual(@RequestBody UsuarioEditDTO usuarioEditDTO) {
@@ -117,7 +125,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioActualizado);
     }
 
-    // 🔹 Cambiar contraseña del usuario autenticado
+    // Cambiar contraseña del usuario autenticado
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/me/password")
     public void cambiarContrasenia(@RequestBody PasswordChangeDTO passwordChangeDTO) {

@@ -47,12 +47,20 @@ public class UsuarioService {
     
     // Actualizar usuario completo (solo ADMIN)
     public Usuario updateUsuario(Usuario usuario) {
-    if (usuarioRepository.existsById(usuario.getId())) {
+        if (!usuarioRepository.existsById(usuario.getId())) {
+            throw new RuntimeException("Usuario no encontrado con id: " + usuario.getId());
+        }
+        
+        // Validar que el correo no esté en uso por otro usuario
+        if (usuario.getCorreo() != null && !usuario.getCorreo().trim().isEmpty()) {
+            Optional<Usuario> usuarioExistente = usuarioRepository.findByCorreo(usuario.getCorreo().trim());
+            if (usuarioExistente.isPresent() && !usuarioExistente.get().getId().equals(usuario.getId())) {
+                throw new RuntimeException("El correo ya está en uso por otro usuario");
+            }
+        }
+        
         return usuarioRepository.save(usuario);
-    } else {
-        throw new RuntimeException("Usuario no encontrado con id: " + usuario.getId());
     }
-}
 
     // Actualizar información básica del usuario (self-edit)
     public Usuario updateUsuarioInfo(Long id, String nombre, String correo, String fechaNacimiento) {
