@@ -50,6 +50,7 @@ public class AuthenticationService {
         usuario.setContrasenia(passwordEncoder.encode(request.getContrasenia()));
         usuario.setIs_admin(request.Is_admin());
         usuario.setFecha_nacimiento(request.getFecha_nacimiento());
+        usuario.setNivel_riesgo("Sin definir");
 
         usuarioRepository.save(usuario);
 
