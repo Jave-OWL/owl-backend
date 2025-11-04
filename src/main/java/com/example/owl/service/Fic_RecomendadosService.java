@@ -11,6 +11,7 @@ import com.example.owl.model.Fic_Recomendado;
 import com.example.owl.model.Usuario;
 import com.example.owl.repository.FicRepository;
 import com.example.owl.repository.Fic_RecomendadosRepository;
+import com.example.owl.repository.UsuarioRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -20,16 +21,22 @@ public class Fic_RecomendadosService {
     private FicRepository ficRepository;
 
     @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
     private Fic_RecomendadosRepository ficRecomendadoRepository;
 
     @Transactional
-    public void asignarFicsRecomendados(Usuario usuario) {
+public void asignarFicsRecomendados(Usuario usuario) {
+    Usuario managedUsuario = usuarioRepository.findById(usuario.getId())
+        .orElseThrow();
 
-    ficRecomendadoRepository.deleteByUsuario(usuario);
+    ficRecomendadoRepository.deleteByUsuario(managedUsuario);
+    ficRecomendadoRepository.flush();
 
     List<Fic> ficsSeleccionados = new ArrayList<>();
 
-    String perfil = usuario.getNivel_riesgo().toLowerCase();
+    String perfil = managedUsuario.getNivel_riesgo().toLowerCase();
 
     switch (perfil) {
         case "conservador":
@@ -47,7 +54,7 @@ public class Fic_RecomendadosService {
     }
 
     for (Fic fic : ficsSeleccionados) {
-        Fic_Recomendado relacion = new Fic_Recomendado(usuario, fic);
+        Fic_Recomendado relacion = new Fic_Recomendado(managedUsuario, fic);
         ficRecomendadoRepository.save(relacion);
     }
 }

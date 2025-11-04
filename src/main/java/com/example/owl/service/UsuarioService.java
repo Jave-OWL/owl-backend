@@ -59,15 +59,12 @@ public class UsuarioService {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con id: " + id));
         
-        // Validar que el correo no esté siendo usado por OTRO usuario
         if (correo != null && !correo.trim().isEmpty()) {
             String correoNormalizado = correo.trim().toLowerCase();
             String correoActualNormalizado = usuario.getCorreo().trim().toLowerCase();
             
-            // Solo validar si el correo realmente cambió
             if (!correoNormalizado.equals(correoActualNormalizado)) {
-                // Buscar si existe otro usuario con ese correo
-                Optional<Usuario> usuarioExistente = usuarioRepository.findByCorreo(correo);
+                    Optional<Usuario> usuarioExistente = usuarioRepository.findByCorreo(correo);
                 if (usuarioExistente.isPresent() && !usuarioExistente.get().getId().equals(id)) {
                     throw new RuntimeException("El correo ya está en uso por otro usuario");
                 }
