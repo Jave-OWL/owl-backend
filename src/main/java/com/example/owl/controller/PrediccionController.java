@@ -1,5 +1,6 @@
 package com.example.owl.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/prediccion")
-@CrossOrigin(origins = {"https://owl.bridgecare.com.co", "http://localhost:4200"})
+@CrossOrigin(origins = "http://localhost:4200")
 public class PrediccionController {
 
 @Autowired 
@@ -42,40 +43,57 @@ private Fic_RecomendadosService ficRecomendadosService;
 @Autowired 
 private Fic_RecomendadosRepository ficRecomendadosRepository;
 
-    @PostMapping
-    public ResponseEntity<?> recibirPrediccion(@RequestBody Map<String, String> body) {
-        // 1️⃣ Leer los datos enviados desde Angular
-        String perfilRiesgo = body.get("perfilRiesgo");
-        String rangoDias = body.get("rangoDias");
-        String pactoPermanencia = body.get("pactoPermanencia");
+ @PostMapping
+public ResponseEntity<?> recibirPrediccion(@RequestBody Map<String, Object> body) {
+    // ⿡ Leer los datos enviados desde Angular
+    String perfilRiesgo = (String) body.get("perfilRiesgo");
 
-        System.out.println("Perfil: " + perfilRiesgo);
-        System.out.println("Rango: " + rangoDias);
-        System.out.println("Pacto: " + pactoPermanencia);
+    // ⚡ Leer pacto (único valor)
+    String pactoPermanencia = null;
+    Object pactoObj = body.get("pactoPermanencia");
+    if (pactoObj != null) {
+        pactoPermanencia = pactoObj.toString();
+    }
 
-        // 2️⃣ Obtener el usuario autenticado (por email, username, etc.)
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();  // ← normalmente es el correo o username del JWT
+    // ⚡ Leer rango de días (puede venir como lista o string)
+    Object rangoObj = body.get("rangoDias");
+    List<String> rangoDias = new ArrayList<>();
+    if (rangoObj instanceof List<?>) {
+        ((List<?>) rangoObj).forEach(r -> rangoDias.add(r.toString()));
+    } else if (rangoObj instanceof String) {
+        rangoDias.add(rangoObj.toString());
+    }
 
-        // 3️⃣ Buscar al usuario en la base de datos
-        Usuario usuario = usuarioService.findByCorreo(username) 
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + username));
+    System.out.println("Perfil: " + perfilRiesgo);
+    System.out.println("Pacto de permanencia: " + pactoPermanencia);
+    System.out.println("Rangos de días: " + rangoDias);
+    System.out.println("---------------------------------------------------------");
 
-        // 4️⃣ Actualizar el campo perfilRiesgo en su registro
-        usuario.setNivel_riesgo(perfilRiesgo);
-        usuarioService.updateUsuario(usuario);
+    // ⿢ Obtener el usuario autenticado
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    String username = auth.getName();
 
+    // ⿣ Buscar al usuario
+    Usuario usuario = usuarioService.findByCorreo(username)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + username));
 
-        ficRecomendadosService.asignarFicsRecomendados(usuario);
-        // 5️⃣ (Opcional) Devolver respuesta al frontend
-        return ResponseEntity.ok(Map.of(
-                "message", "Perfil de riesgo actualizado correctamente",
-                "perfilRiesgo", perfilRiesgo,
-                "usuario", usuario.getCorreo()
-        ));
+    // ⿤ Actualizar perfil de riesgo
+    usuario.setNivel_riesgo(perfilRiesgo);
+    usuarioService.updateUsuario(usuario);
 
+    // ⿥ Llamar al servicio con el pacto único y la lista de rangos
+    ficRecomendadosService.asignarFicsRecomendados(usuario, pactoPermanencia, rangoDias);
 
+    // ⿦ Responder al frontend
+    return ResponseEntity.ok(Map.of(
+        "message", "Perfil de riesgo actualizado correctamente",
+        "perfilRiesgo", perfilRiesgo,
+        "usuario", usuario.getCorreo(),
+        "pactoPermanencia", pactoPermanencia,
+        "rangoDias", rangoDias
+    ));
 }
+
 
 
   @PreAuthorize("isAuthenticated()")
@@ -90,8 +108,7 @@ private Fic_RecomendadosRepository ficRecomendadosRepository;
         
         
                 return ficService.getFicsByNivelRiesgo(usuario.getNivel_riesgo());
-        
-        
-    }
+
+            }
 
 }
