@@ -92,6 +92,35 @@ El módulo **owl-backend** expone una serie de endpoints REST que permiten gesti
 ### Recomendaciones
 - **GET** `/api/recomendaciones` → Devuelve las recomendaciones personalizadas de FICs.  
 - **GET** `/api/recomendaciones/usuario/{id}` → Obtiene las recomendaciones según el usuario.  
+
+
+## 📁 Estructura del Proyecto
+
+A continuación, se presenta la estructura general del módulo **owl-backend**, organizada según las buenas prácticas de arquitectura por capas en Spring Boot.  
+Cada carpeta cumple una función específica dentro del sistema, garantizando modularidad, mantenibilidad y claridad en el código fuente.
+```bash
+owl-backend/  
+├── src/  
+│   ├── main/  
+│   │   ├── java/  
+│   │   │   └── com/example/owl/  
+│   │   │       ├── controller/       # Contiene los controladores REST que gestionan las solicitudes del cliente
+│   │   │       ├── dto/              # Define los objetos de transferencia de datos (Data Transfer Objects)
+│   │   │       ├── init/             # Incluye la inicialización de datos o configuraciones base
+│   │   │       ├── mapper/           # Gestiona la conversión entre entidades y DTOs
+│   │   │       ├── model/            # Contiene las entidades del dominio y los modelos de datos
+│   │   │       ├── repository/       # Define las interfaces para el acceso a la base de datos mediante JPA
+│   │   │       └── service/          # Implementa la lógica de negocio del sistema
+│   │   └── resources/                # Archivos de configuración, propiedades y recursos estáticos
+│   └── test/  
+│       └── java/com/example/owl/  
+│           ├── controller/            # Pruebas de los controladores REST
+│           ├── model/                 # Pruebas de las entidades y modelos de datos
+│           ├── repository/            # Pruebas de integración con la base de datos
+│           └── service/               # Pruebas de la capa de servicios
+
+
+```
 ## 📊 Modelo de Datos Principal
 
 El modelo de datos de **OWL** está estructurado en torno a la entidad principal **Fic**, que representa un fondo de inversión colectiva.  
