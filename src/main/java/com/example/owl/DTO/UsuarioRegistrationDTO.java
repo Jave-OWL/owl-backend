@@ -8,10 +8,9 @@ public class UsuarioRegistrationDTO{
     private String contrasenia;
     private String fecha_nacimiento;
     private String nivel_riesgo;
-     @JsonProperty("is_admin")
+    
+    @JsonProperty("is_admin")
     private Boolean is_admin;
-
-   
 
     public UsuarioRegistrationDTO() {
     }

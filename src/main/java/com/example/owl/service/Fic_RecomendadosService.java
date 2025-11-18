@@ -24,114 +24,18 @@ public class Fic_RecomendadosService {
     @Autowired
     private Fic_RecomendadosRepository ficRecomendadoRepository;
 
-    /**
-     * Asigna FICs recomendados a un usuario según su perfil, pacto y rangos de días.
-     */
-    @Transactional
-    public void asignarFicsRecomendados(Usuario usuario, String pactoFront, List<String> rangoDiasFront) {
 
-        // 1) Limpiar recomendaciones anteriores
-        ficRecomendadoRepository.deleteByUsuario(usuario);
-        ficRecomendadoRepository.flush();
-
-        String perfil = usuario.getNivel_riesgo().toLowerCase();
-
-        // 2) Tipos de FIC permitidos por perfil
-        Map<String, List<String>> tiposPorPerfil = Map.of(
-                "conservador", List.of("Renta Fija"),
-                "moderado", List.of("Renta Mixta"),
-                "arriesgado", List.of("Alternativa", "Renta Variable")
-        );
-
-        List<String> tiposPermitidos = tiposPorPerfil.getOrDefault(perfil, List.of());
-        if (tiposPermitidos.isEmpty()) {
-            System.out.println("Perfil no reconocido: " + perfil);
-            return;
-        }
-
-        // 3) Buscar los FICs del tipo permitido
-        List<Fic> ficsSeleccionados = ficRepository.findByTipoInIgnoreCase(tiposPermitidos);
-
-        // 3.1) Quitar duplicados por nombre normalizado
-        Map<String, Fic> mapaPorNombreNormalizado = new LinkedHashMap<>();
-        for (Fic fic : ficsSeleccionados) {
-            String claveNombre = normalizarNombreFic(fic.getNombre_fic());
-            mapaPorNombreNormalizado.putIfAbsent(claveNombre, fic); // si ya existe, se ignora el duplicado
-        }
-        List<Fic> ficsUnicos = new ArrayList<>(mapaPorNombreNormalizado.values());
-
-        // 4) Normalizar pacto y rangos recibidos
-        String pactoNormalizado = normalizarTexto(pactoFront);
-        List<String> rangosNormalizados = (rangoDiasFront == null)
-                ? List.of()
-                : rangoDiasFront.stream()
-                        .filter(Objects::nonNull)
-                        .map(this::normalizarTexto)
-                        .toList();
-
-        System.out.println("\nPerfil: " + perfil + " — Tipos buscados: " + tiposPermitidos);
-        System.out.println("Pacto recibido: " + pactoFront);
-        System.out.println("Pacto normalizado: " + pactoNormalizado);
-        System.out.println("Rangos de días recibidos: " + rangoDiasFront);
-        System.out.println("Rangos de días normalizados: " + rangosNormalizados);
-        System.out.println("---------------------------------------------------------");
-
-        int contador = 0;
-
-        // 5) Set por nombre normalizado, capa extra para evitar duplicados
-        Set<String> ficsGuardadosPorNombre = new HashSet<>();
-
-        // 6) Recorrer solo los FICs únicos y sus plazos para buscar coincidencias
-        for (Fic fic : ficsUnicos) {
-
-            String nombreNormalizado = normalizarNombreFic(fic.getNombre_fic());
-            if (!ficsGuardadosPorNombre.add(nombreNormalizado)) {
-                // si no se pudo añadir al set, ya estaba → lo saltamos
-                continue;
-            }
-
-            for (Plazo_Duracion plazoDuracion : fic.getPlazo_duraciones()) {
-                String plazoNormalizado = normalizarTexto(plazoDuracion.getPlazo());
-
-                boolean coincideConPacto = esPlazoEquivalente(pactoNormalizado, plazoNormalizado);
-                boolean coincideConRango = rangosNormalizados.stream()
-                        .anyMatch(rango -> esPlazoEquivalente(rango, plazoNormalizado));
-
-                if (coincideConPacto || coincideConRango) {
-                    System.out.println("✅ Coincidencia encontrada en FIC: " + fic.getNombre_fic());
-                    System.out.println("Tipo de FIC: " + fic.getTipo());
-                    System.out.println("Plazo coincidente: " + plazoDuracion.getPlazo());
-                    System.out.println("Perfil del usuario: " + usuario.getNivel_riesgo());
-                    System.out.println("---------------------------------------------------------");
-
-                    Fic_Recomendado relacion = new Fic_Recomendado(usuario, fic);
-                    ficRecomendadoRepository.save(relacion);
-
-                    contador++;
-                    break; // no revisar más plazos de este FIC
-                }
-            }
-        }
-
-        System.out.println("Total de FICs recomendados al usuario " + usuario.getCorreo() + ": " + contador);
-    }
-
-    /**
-     * Determina si dos textos de plazos son equivalentes (solapan sus rangos en días).
-     */
+    // Verifica si dos descripciones de plazo son equivalentes
     private boolean esPlazoEquivalente(String texto1, String texto2) {
         int[] rango1 = convertirARangoDias(normalizarTexto(texto1));
         int[] rango2 = convertirARangoDias(normalizarTexto(texto2));
 
         if (rango1 == null || rango2 == null) return false;
 
-        // solapamiento de rangos
         return rango1[0] <= rango2[1] && rango1[1] >= rango2[0];
     }
 
-    /**
-     * Convierte un texto de plazo a un rango en días.
-     */
+    // Convierte una descripción de plazo en un rango de días
     private int[] convertirARangoDias(String texto) {
         if (texto == null || texto.isBlank()) return null;
 
@@ -153,12 +57,10 @@ public class Fic_RecomendadosService {
         if (texto.contains("mas de 5") || texto.contains("5 anos") || texto.contains("mas de s"))
             return new int[]{1826, Integer.MAX_VALUE};
 
-        return null; // No identificado
+        return null; 
     }
 
-    /**
-     * Normaliza un nombre de FIC: minúsculas, sin acentos, sin caracteres especiales, espacios limpios.
-     */
+    // Normaliza el nombre de un Fic para comparaciones
     private String normalizarNombreFic(String nombre) {
         if (nombre == null) return "";
         nombre = nombre.toLowerCase().trim();
@@ -169,9 +71,7 @@ public class Fic_RecomendadosService {
         return nombre;
     }
 
-    /**
-     * Normaliza texto general: minúsculas, sin acentos, sin caracteres especiales, espacios limpios.
-     */
+    // Normaliza un texto para comparaciones
     private String normalizarTexto(String texto) {
         if (texto == null) return "";
         texto = texto.toLowerCase(Locale.ROOT).trim();
@@ -182,9 +82,97 @@ public class Fic_RecomendadosService {
         return texto;
     }
 
-    /**
-     * Devuelve la lista de FIC recomendados para un usuario, evitando duplicados.
-     */
+
+    // asignar Fics recomendados a un usuario según su perfil y preferencias
+    @Transactional
+    public void asignarFicsRecomendados(Usuario usuario, String pactoFront, List<String> rangoDiasFront) {
+
+        ficRecomendadoRepository.deleteByUsuario(usuario);
+        ficRecomendadoRepository.flush();
+        String perfil = usuario.getNivel_riesgo().toLowerCase();
+
+        Map<String, List<String>> tiposPorPerfil = Map.of(
+                "conservador", List.of("Renta Fija"),
+                "moderado", List.of("Renta Mixta"),
+                "arriesgado", List.of("Alternativa", "Renta Variable")
+        );
+
+        List<String> tiposPermitidos = tiposPorPerfil.getOrDefault(perfil, List.of());
+        if (tiposPermitidos.isEmpty()) {
+            System.out.println("Perfil no reconocido: " + perfil);
+            return;
+        }
+
+        List<Fic> ficsSeleccionados = ficRepository.findByTipoInIgnoreCase(tiposPermitidos);
+
+       
+        Map<String, Fic> mapaPorNombreNormalizado = new LinkedHashMap<>();
+        for (Fic fic : ficsSeleccionados) {
+            String claveNombre = normalizarNombreFic(fic.getNombre_fic());
+            mapaPorNombreNormalizado.putIfAbsent(claveNombre, fic); 
+        }
+        List<Fic> ficsUnicos = new ArrayList<>(mapaPorNombreNormalizado.values());
+
+      
+        String pactoNormalizado = normalizarTexto(pactoFront);
+        List<String> rangosNormalizados = (rangoDiasFront == null)
+                ? List.of()
+                : rangoDiasFront.stream()
+                        .filter(Objects::nonNull)
+                        .map(this::normalizarTexto)
+                        .toList();
+                
+        System.out.println("\nPerfil: " + perfil + " — Tipos buscados: " + tiposPermitidos);
+        System.out.println("Pacto recibido: " + pactoFront);
+        System.out.println("Pacto normalizado: " + pactoNormalizado);
+        System.out.println("Rangos de días recibidos: " + rangoDiasFront);
+        System.out.println("Rangos de días normalizados: " + rangosNormalizados);
+        System.out.println("---------------------------------------------------------");
+
+        int contador = 0;
+
+        
+        Set<String> ficsGuardadosPorNombre = new HashSet<>();
+
+      
+        for (Fic fic : ficsUnicos) {
+
+            String nombreNormalizado = normalizarNombreFic(fic.getNombre_fic());
+            if (!ficsGuardadosPorNombre.add(nombreNormalizado)) {
+    
+                continue;
+            }
+
+            for (Plazo_Duracion plazoDuracion : fic.getPlazo_duraciones()) {
+                String plazoNormalizado = normalizarTexto(plazoDuracion.getPlazo());
+
+                boolean coincideConPacto = esPlazoEquivalente(pactoNormalizado, plazoNormalizado);
+                boolean coincideConRango = rangosNormalizados.stream()
+                        .anyMatch(rango -> esPlazoEquivalente(rango, plazoNormalizado));
+
+                if (coincideConPacto || coincideConRango) {
+                    System.out.println("Coincidencia encontrada en FIC: " + fic.getNombre_fic());
+                    System.out.println("Tipo de FIC: " + fic.getTipo());
+                    System.out.println("Plazo coincidente: " + plazoDuracion.getPlazo());
+                    System.out.println("Perfil del usuario: " + usuario.getNivel_riesgo());
+                    System.out.println("---------------------------------------------------------");
+
+                    Fic_Recomendado relacion = new Fic_Recomendado(usuario, fic);
+                    ficRecomendadoRepository.save(relacion);
+
+                    contador++;
+                    break; 
+                }
+            }
+        }
+
+        System.out.println("Total de FICs recomendados al usuario " + usuario.getCorreo() + ": " + contador);
+    }
+
+
+
+    // Obtener la lista de Fics recomendados para un usuario específico
+   
     public List<Fic> getFicsRecomendadosPorUsuario(Usuario usuario) {
         List<Fic_Recomendado> recomendaciones = ficRecomendadoRepository.findAll();
         List<Fic> ficsRecomendados = new ArrayList<>();

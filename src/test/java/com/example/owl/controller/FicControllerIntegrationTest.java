@@ -47,9 +47,9 @@ public class FicControllerIntegrationTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        ficRecomendadoRepository.deleteAll(); // 🔹 primero borra dependencias
+        ficRecomendadoRepository.deleteAll(); 
         usuarioRepository.deleteAll();   
-        // Crear usuario admin
+    
         Usuario admin = new Usuario();
         admin.setNombre("Admin Test");
         admin.setCorreo("admin@test.com");
@@ -58,7 +58,6 @@ public class FicControllerIntegrationTest {
         admin.setIs_admin(true);
         usuarioRepository.save(admin);
 
-        // Autenticar y obtener token JWT
         LoginDTO login = new LoginDTO();
         login.setCorreo("admin@test.com");
         login.setContrasenia("123456");
@@ -119,7 +118,6 @@ public class FicControllerIntegrationTest {
 
     @Test
     void testActualizarFic_ComoAdmin_DeberiaActualizarDatos() throws Exception {
-        // Crear FIC inicial
         Fic fic = new Fic();
         fic.setNombre_fic("FIC Original");
         fic.setGestor("Gestor 1");
@@ -160,7 +158,6 @@ public class FicControllerIntegrationTest {
 
     @Test
     void testEliminarFic_ComoAdmin_DeberiaEliminarFic() throws Exception {
-        // Crear FIC primero
         Fic fic = new Fic();
         fic.setNombre_fic("Fondo para eliminar");
         fic.setGestor("Gestor Test");

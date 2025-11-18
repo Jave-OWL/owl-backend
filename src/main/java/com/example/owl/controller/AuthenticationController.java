@@ -21,11 +21,15 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
 
+    // Registrar un nuevo usuario
+
     @PostMapping("/signup")
     public ResponseEntity<JwtAuthenticationResponse> signup(@RequestBody UsuarioRegistrationDTO request) {
         return ResponseEntity.ok(authenticationService.signup(request));
     }
 
+
+    // Autenticar un usuario existente
     @PostMapping("/login")
     public ResponseEntity<JwtAuthenticationResponse> login(@RequestBody LoginDTO request) {
         JwtAuthenticationResponse jwt = authenticationService.login(request);

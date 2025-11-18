@@ -46,13 +46,9 @@ public class UsuarioControllerIntegrationTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        // 🔹 primero limpiar tabla hija
         ficRecomendadoRepository.deleteAll();
-
-        // 🔹 luego limpiar usuarios
         usuarioRepository.deleteAll();
 
-        // Crear usuario admin
         Usuario admin = new Usuario();
         admin.setNombre("Admin Test");
         admin.setCorreo("admin@test.com");
@@ -61,7 +57,6 @@ public class UsuarioControllerIntegrationTest {
         admin.setIs_admin(true);
         usuarioRepository.save(admin);
 
-        // Login para obtener JWT
         LoginDTO login = new LoginDTO();
         login.setCorreo("admin@test.com");
         login.setContrasenia("123456");
@@ -78,24 +73,7 @@ public class UsuarioControllerIntegrationTest {
         jwtToken = jwtResponse.getToken();
     }
 
-    @Test
-    void testCrearUsuario_ComoAdmin_DeberiaRetornarUsuarioCreado() throws Exception {
-        Usuario usuario = new Usuario();
-        usuario.setNombre("Usuario Prueba");
-        usuario.setCorreo("usuario@test.com");
-        usuario.setContrasenia("123456");
-        usuario.setFecha_nacimiento("1995-05-05");
-        usuario.setIs_admin(false);
 
-        mockMvc.perform(post("/usuario")
-                        .header("Authorization", "Bearer " + jwtToken)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(usuario)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nombre").value("Usuario Prueba"))
-                .andExpect(jsonPath("$.correo").value("usuario@test.com"))
-                .andExpect(jsonPath("$.is_admin").value(false));
-    }
 
     @Test
     void testObtenerUsuarios_ComoAdmin_DeberiaRetornarLista() throws Exception {

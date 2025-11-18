@@ -1,5 +1,11 @@
 @base_url = http://localhost:8081
 
+POST http://localhost:8081/auth/login
+
+{
+  "correo": "miguelbaronm@hotmail.com",
+  "contrasenia": "123456"
+}
 
 
 ### =============================

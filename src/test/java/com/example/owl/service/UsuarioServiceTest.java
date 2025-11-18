@@ -57,12 +57,12 @@ class UsuarioServiceTest {
         assertThat(out.getCorreo()).isEqualTo("alice@owl.com");
         verify(usuarioRepository).save(any(Usuario.class));
 
-        // IMPORTANTE: NO verificar passwordEncoder aquí porque tu UsuarioService no encripta.
+    
     }
 
  @Test
 void registrarUsuario_duplicado_noLanzaExcepcion_enUsuarioService() {
-    // Arrange: tu service NO valida duplicados (lo hace AuthenticationService.signup)
+    // Arrange
     when(usuarioRepository.save(any(Usuario.class))).thenAnswer(inv -> inv.getArgument(0));
 
     // Act
@@ -110,7 +110,6 @@ void updateUsuario_ok() {
 
     @Test
     void userDetailsService_roles_ok() {
-        // Este test valida que tu userDetailsService agregue ROLE_USER o ROLE_ADMIN
         Usuario admin = new Usuario("Admin","admin@owl.com","hash", true, "1985-02-02","Moderado");
         when(usuarioRepository.findByCorreo("admin@owl.com")).thenReturn(Optional.of(admin));
 
