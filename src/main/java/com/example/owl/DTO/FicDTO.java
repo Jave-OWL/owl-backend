@@ -7,27 +7,20 @@ public class FicDTO {
     private String nombre_fic;
     private String gestor;
     private String custodio;
-    private String fecha_corte;            // Spring Boot parsea ISO yyyy-MM-dd
+    private String fecha_corte;          
     private String politica_de_inversion;
-   // private String nivel_riesgo;              // si tu entidad lo maneja
     private String tipo;   
     
-    
-    // opcional si existe en la entidad
-
     public FicDTO(Long id, String nombre_fic, String gestor, String custodio, String fecha_corte,
-                  String politica_de_inversion, String tipo) {
+                String politica_de_inversion, String tipo) {
         this.id = id;
         this.nombre_fic = nombre_fic;
         this.gestor = gestor;
         this.custodio = custodio;
         this.fecha_corte = fecha_corte;
         this.politica_de_inversion = politica_de_inversion;
-        //this.nivel_riesgo = nivel_riesgo;
         this.tipo = tipo;
     }
-
-    
 
     public Long getId() {
         return id;
@@ -77,14 +70,6 @@ public class FicDTO {
         this.politica_de_inversion = politica_de_inversion;
     }
 
-    // public String getNivel_riesgo() {
-    //     return nivel_riesgo;
-    // }
-
-    // public void setNivel_riesgo(String nivel_riesgo) {
-    //     this.nivel_riesgo = nivel_riesgo;
-    // }
-
     public String getTipo() {
         return tipo;
     }
@@ -92,8 +77,5 @@ public class FicDTO {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-
-    
-
 
 }

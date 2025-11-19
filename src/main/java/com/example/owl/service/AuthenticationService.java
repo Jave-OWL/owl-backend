@@ -80,7 +80,7 @@ public class AuthenticationService {
                         )
                 );
             } else {
-                // Validación manual si no tienes AuthenticationManager configurado
+             
                 Usuario probe = usuarioRepository.findByCorreo(request.getCorreo())
                         .orElseThrow(() -> new IllegalArgumentException("Correo o contraseña incorrectos."));
                 if (!passwordEncoder.matches(request.getContrasenia(), probe.getContrasenia())) {

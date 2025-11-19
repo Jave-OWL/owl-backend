@@ -40,7 +40,7 @@ class Fic_RecomendadosServiceTest {
     private Fic rv;   // renta variable
     private Fic alt;  // alternativa
 
-    // Plazo genérico que va a coincidir con el rango "Más de 5 años"
+
     private Plazo_Duracion plazoMas5;
 
     @Captor
@@ -63,40 +63,42 @@ class Fic_RecomendadosServiceTest {
         plazoMas5 = new Plazo_Duracion();
         plazoMas5.setPlazo("Más de 5 años");
 
-        // IMPORTANTE: Esto asume que en la entidad Fic, la lista plazo_duraciones
-        // está inicializada (por ejemplo: new ArrayList<>()).
         rf = new Fic();
         rf.setId(10L);
         rf.setTipo("Renta Fija");
         rf.setNombre_fic("RF Conservador");
+        rf.setPlazo_duraciones(new ArrayList<>());
         rf.getPlazo_duraciones().add(plazoMas5);
 
         rm = new Fic();
         rm.setId(20L);
         rm.setTipo("Renta Mixta");
         rm.setNombre_fic("RM Moderado");
+        rm.setPlazo_duraciones(new ArrayList<>());
         rm.getPlazo_duraciones().add(plazoMas5);
 
         rv = new Fic();
         rv.setId(30L);
         rv.setTipo("Renta Variable");
         rv.setNombre_fic("RV Arriesgado");
+        rv.setPlazo_duraciones(new ArrayList<>());
         rv.getPlazo_duraciones().add(plazoMas5);
 
         alt = new Fic();
         alt.setId(40L);
         alt.setTipo("Alternativa");
         alt.setNombre_fic("ALT Arriesgado");
+        alt.setPlazo_duraciones(new ArrayList<>());
         alt.getPlazo_duraciones().add(plazoMas5);
     }
 
+
     @Test
     void asignarFicsRecomendados_conservador_ok() {
-        // El servicio llama findByTipoInIgnoreCase(List<String>)
         when(ficRepository.findByTipoInIgnoreCase(List.of("Renta Fija")))
                 .thenReturn(List.of(rf));
 
-        String pacto = "pacto"; // el matcheo real lo hace el rango
+        String pacto = "pacto"; 
         List<String> rangos = List.of("Más de 5 años");
 
         service.asignarFicsRecomendados(uConservador, pacto, rangos);
@@ -175,7 +177,7 @@ class Fic_RecomendadosServiceTest {
                 .extracting(Fic::getId)
                 .containsExactlyInAnyOrder(10L, 30L);
 
-        // No llama a ficRepository en este método
+   
         verifyNoInteractions(ficRepository);
         verify(ficRecomendadoRepository).findAll();
     }

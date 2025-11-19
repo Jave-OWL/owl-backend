@@ -20,7 +20,7 @@ import com.example.owl.model.Volatilidad_Historica;
 
 import com.example.owl.repository.FicRepository;
 import com.example.owl.repository.UsuarioRepository;
-// Opcional si tienes la tabla de recomendaciones
+
 
 import com.example.owl.repository.Fic_RecomendadosRepository;
 
@@ -54,10 +54,10 @@ public class DBInitializer implements CommandLineRunner {
 
         // --- Calificaciones ---
         Calificacion cal = new Calificacion(
-            "",                         // calificacion
-            null,                       // fecha_ultima_calificacion
-            "",                         // entidad_calificadora
-            null,                       // entidad_calificadora_normalizada
+            "",                         
+            null,                       
+            "",                        
+            null,                       
             fic
         );
 
@@ -89,15 +89,15 @@ public class DBInitializer implements CommandLineRunner {
             new Composicion_Portafolio("calificacion", "Sin calificación", 0.0016f, fic)
         );
 
-        // --- Volatilidades (nombres EXACTOS de campos) ---
+
         Volatilidad_Historica volI = new Volatilidad_Historica(
             "Inversionista tipo I",
-            0.06875f,   // ultimo_mes
-            0.10215f,   // ultimo_6_meses
-            0.10005f,   // anio_corrido
-            0.0966f,    // ultimo_anio
-            0.10608f,   // ultimo_2_anios
-            0.11624f,   // ultimo_3_anios
+            0.06875f,   
+            0.10215f,   
+            0.10005f,   
+            0.0966f,    
+            0.10608f,   
+            0.11624f,   
             fic
         );
 
@@ -112,15 +112,15 @@ public class DBInitializer implements CommandLineRunner {
             fic
         );
 
-        // --- Rentabilidades (ojo: en tu entidad el campo de 6 meses se llama 'ultimos_6_meses') ---
+      
         Rentabilidad_Historica renI = new Rentabilidad_Historica(
             "Inversionista tipo I",
-            -0.22846f,   // ultimo_mes
-            -0.09937f,   // ultimos_6_meses
-            -0.11307f,   // anio_corrido
-            -0.04064f,   // ultimo_anio
-            0.02474f,    // ultimos_2_anios
-            -0.827f,     // ultimo_3_anios
+            -0.22846f,   
+            -0.09937f,  
+            -0.11307f,  
+            -0.04064f,  
+            0.02474f,   
+            -0.827f,     
             fic
         );
 
@@ -135,7 +135,7 @@ public class DBInitializer implements CommandLineRunner {
             fic
         );
 
-        // --- Principales Inversiones ---
+        
         List<Principales_Inversiones> invs = List.of(
             new Principales_Inversiones("ESTADOS UNIDOS DE AMERICA US TREASURY", 0.856f, fic),
             new Principales_Inversiones("CITIBANK NEW YORK", 0.0823f, fic),
@@ -146,7 +146,7 @@ public class DBInitializer implements CommandLineRunner {
             new Principales_Inversiones("BANCO DE BOGOTA NEW YORK AGENCY", 0.0001f, fic)
         );
 
-        // --- Plazos / Duraciones ---
+     
         List<Plazo_Duracion> plazos = List.of(
             new Plazo_Duracion("1-180 DIAS", 0.91128f, fic),
             new Plazo_Duracion("181-360 DIAS", 0.0f, fic),
@@ -165,8 +165,9 @@ public class DBInitializer implements CommandLineRunner {
 
         fic = ficRepository.save(fic);
 
-        // ========= USUARIOS =========
-        // Usuario NO admin (Miguel) – hash que enviaste
+
+        // USUARIOS 
+       
         Usuario miguel = new Usuario(
             "Miguel",
             "miguelbaronm@hotmail.com",
@@ -177,7 +178,6 @@ public class DBInitializer implements CommandLineRunner {
         );
         miguel = usuarioRepository.save(miguel);
 
-        // Usuario admin de prueba (hash ejemplo de 123456 — cámbialo si usas otro)
         Usuario admin = new Usuario(
             "Admin Test",
             "admin@owl.com",
@@ -188,10 +188,10 @@ public class DBInitializer implements CommandLineRunner {
         );
         admin = usuarioRepository.save(admin);
 
-        // ========= FIC RECOMENDADOS (opcional, si tienes la tabla) =========
+        // Asignar Fics Recomendados a Miguel
         if (ficRecomendadoRepository != null) {
             ficRecomendadoRepository.save(new Fic_Recomendado(miguel, fic));
-            // Puedes añadir más reglas de negocio aquí (por ejemplo, por nivel_riesgo)
+           
         }
     }
 }

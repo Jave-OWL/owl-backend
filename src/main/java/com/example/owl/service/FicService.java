@@ -15,22 +15,28 @@ public class FicService {
     @Autowired 
     private FicRepository ficRepository;
 
+    // Obtrener un Fic por su ID
     public Optional<Fic> getFicById(Long id) {
         return ficRepository.findById(id);
     }
 
+    // Obtener todos los Fics
     public List<Fic> getAllFics() {
         return ficRepository.findAll();
     }
 
+    // Guardar un nuevo Fic
     public Fic saveFic(Fic fic) {
         return ficRepository.save(fic);
     }
 
+    // Eliminar un Fic por su ID
     public void deleteFic(Long id) {
         ficRepository.deleteById(id);
     }
 
+
+    // Actualizar un Fic existente
     public Fic updateFic(Fic fic) {
         if (ficRepository.existsById(fic.getId())) {
             return ficRepository.save(fic);
@@ -40,6 +46,7 @@ public class FicService {
     }
 
 
+    // Obtener Fics por nivel de riesgo
     public List<Fic> getFicsByNivelRiesgo(String nivelRiesgo) {
         return ficRepository.findByTipoIgnoreCase(nivelRiesgo);
     }

@@ -33,6 +33,7 @@ public class UsuarioController {
 
     // Obtener todos los usuarios (solo ADMIN)
     
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/list")
     public List<Usuario> obtenerUsuarios() {
         return usuarioService.getAllUsuarios();
@@ -40,6 +41,7 @@ public class UsuarioController {
 
     // Obtener un usuario por ID (solo ADMIN)
   
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public Usuario obtenerUsuarioPorId(@PathVariable Long id) {
         return usuarioService.getUsuarioById(id).orElse(null);

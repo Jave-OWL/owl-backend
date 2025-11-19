@@ -51,7 +51,6 @@ public class PrediccionControllerIntegrationTest {
 
     @Test
     void postPrediccion_y_listarPorPerfil_ok() {
-        // POST /prediccion
         Map<String,String> body = Map.of(
                 "perfilRiesgo", "Conservador",
                 "rangoDias", "1-180",
@@ -67,13 +66,12 @@ public class PrediccionControllerIntegrationTest {
             .expectBody()
             .jsonPath("$.message").isEqualTo("Perfil de riesgo actualizado correctamente");
 
-        // GET /prediccion/list
         webTestClient.get()
             .uri(BASE_URL + "/list")
             .header(HttpHeaders.AUTHORIZATION, "Bearer " + userToken)
             .exchange()
             .expectStatus().isOk()
             .expectBody()
-            .jsonPath("$").exists(); // valida que retorna lista (ajusta si quieres tamaño > 0)
+            .jsonPath("$").exists(); 
     }
 }

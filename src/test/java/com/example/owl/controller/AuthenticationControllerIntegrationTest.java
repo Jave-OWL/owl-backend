@@ -33,7 +33,6 @@ public class AuthenticationControllerIntegrationTest {
 
     @Test
     void signupAndLogin_ok() {
-        // signup
         UsuarioRegistrationDTO reg = new UsuarioRegistrationDTO();
         reg.setNombre("Tester");
         reg.setCorreo("tester@example.com");
@@ -47,7 +46,6 @@ public class AuthenticationControllerIntegrationTest {
         assertNotNull(signResp.getBody());
         assertNotNull(signResp.getBody().getToken());
 
-        // login
         LoginDTO login = new LoginDTO();
         login.setCorreo("tester@example.com");
         login.setContrasenia("secret123");
